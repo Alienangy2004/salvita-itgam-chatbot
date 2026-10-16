@@ -1,536 +1,402 @@
 {
   "chatbot": "Salvita - Eventos ITGAM",
-  "fecha_corte": "15/10/2026",
+  "escuela": "ITGAM - Instituto Tecnológico de Gustavo A. Madero",
+  "web_oficial": "https://www.gamadero.tecnm.mx/",
   "facebook_oficial": "https://www.facebook.com/share/14tSUK4V3HL/?mibextid=wwXIfr",
-  "calendario_pdf_local": "./CAL_AGO-DIC26.pdf",
+  "fecha_corte": "15/10/2026",
+  "intenciones_ml": [
+    {
+      "intent": "Saludo_Amigable",
+      "opcionMenu": "Social",
+      "descripcion": "Saludos cordiales como buenos días, buenas tardes, buenas noches, hola, qué onda",
+      "samples": [
+        "hola",
+        "hola salvita",
+        "buenos dias",
+        "buenas tardes",
+        "buenas noches",
+        "que onda",
+        "que tal",
+        "hey hola",
+        "saludos salvita",
+        "hola buen dia"
+      ],
+      "response": "¡Hola, qué gusto saludarte! 🦅✨ Espero que estés teniendo un excelente día en el **ITGAM (Instituto Tecnológico de Gustavo A. Madero)**. Soy **Salvita**, tu compañero y asistente virtual. Conmigo puedes platicar, consultar qué eventos están **en vivo hoy**, cuáles se harán **esta semana (próximos 7 días)**, ubicar tu salón en el **croquis aéreo** o revisar cómo liberar tus créditos.",
+      "followUpQ": "¿Te gustaría que te cuente qué eventos tenemos para esta semana (del 15 al 22 de octubre) o prefieres ver el menú general?",
+      "followUpA": "¡Súper! Esta semana (límite de 7 días) tenemos la **Evaluación 2 Regional del ENECB el 21 de octubre (#126)**, el **Curso de Inducción de Servicio Social el 22 de octubre (#127)** y la **Ceremonia de Titulación el 22 de octubre (#128)**."
+    },
+    {
+      "intent": "Identidad_Personalidad",
+      "opcionMenu": "Social",
+      "descripcion": "Preguntas sobre qué eres, quién eres, cómo te llamas, quién te creó o tu propósito",
+      "samples": [
+        "que eres",
+        "quien eres",
+        "como te llamas",
+        "eres un robot o una persona",
+        "quien te creo",
+        "para que sirves",
+        "cual es tu funcion",
+        "hablame de ti salvita",
+        "por que te llamas salvita"
+      ],
+      "response": "¡Me encanta que me preguntes! 🤖🦅 Soy **Salvita**, el asistente virtual inteligente con corazón tecnológico del **ITGAM (Instituto Tecnológico de Gustavo A. Madero)**. Fui entrenado con **Machine Learning (TF-IDF, Naive Bayes y corrección ortográfica Levenshtein)** para orientar a toda nuestra comunidad estudiantil sobre eventos académicos, deportivos, culturales, el calendario oficial `CAL_AGO-DIC26.pdf` y la ubicación aérea de nuestros edificios.",
+      "followUpQ": "¿Quieres escuchar mi voz activando el botón '🔊 Voz' arriba o deseas conocer un dato curioso del ITGAM?",
+      "followUpA": "¡Dato curioso! 🦅 El ITGAM celebró su **17° Aniversario el 2 de septiembre de 2026 (#112)** y del 28 de septiembre al 1 de octubre fue **Sede Oficial Regional de InnovaTecNM y HackaTecNM 2026 (Región 5)**."
+    },
+    {
+      "intent": "Estado_Animo_Charla",
+      "opcionMenu": "Social",
+      "descripcion": "Preguntas de cortesía como cómo estás, cómo te sientes, qué haces, cuéntame un chiste",
+      "samples": [
+        "como estas",
+        "como te va",
+        "como te sientes hoy",
+        "que haces",
+        "que cuentas",
+        "cuentame un chiste",
+        "dato curioso del itgam",
+        "estoy aburrido",
+        "estoy estresado por la escuela"
+      ],
+      "response": "¡Estoy al 100% de batería y con toda la actitud tecnológica! ⚡🦉 Justo estaba revisando el calendario del ITGAM para que ningún estudiante se pierda sus créditos complementarios ni los festivales de este semestre (¡ya viene el Recital de Calaveritas el 29 de octubre y el Festival de Día de Muertos el 30 de octubre! 🎃💀).",
+      "followUpQ": "¿Quieres que te recomiende algún taller cultural o deportivo para desestresarte después de clases?",
+      "followUpA": "¡Te recomiendo muchísimo los talleres de **Pintura, Serigrafía, Teatro, Danza Urbana, Salsa, Ajedrez o Básquetbol**! Todos son gratuitos y además te liberan 1 crédito complementario."
+    },
+    {
+      "intent": "Pagina_Web_Escuela",
+      "opcionMenu": "6",
+      "descripcion": "Página web oficial del ITGAM - Instituto Tecnológico de Gustavo A. Madero",
+      "samples": [
+        "cual es la pagina web de la escuela",
+        "pagina oficial del itgam",
+        "sitio web instituto tecnologico de gustavo a madero",
+        "link de la pagina del itgam",
+        "donde veo la web oficial de la escuela"
+      ],
+      "response": "La página web oficial de nuestra escuela (**ITGAM - Instituto Tecnológico de Gustavo A. Madero**) es **[https://www.gamadero.tecnm.mx/](https://www.gamadero.tecnm.mx/)** 🌐 y nuestro perfil oficial de Facebook es **[Facebook Oficial ITGAM](https://www.facebook.com/share/14tSUK4V3HL/?mibextid=wwXIfr)** 📘. También puedes abrir ambos con los botones de la esquina superior derecha.",
+      "followUpQ": "¿Deseas consultar también el Calendario Escolar Oficial `CAL_AGO-DIC26.pdf`?",
+      "followUpA": "¡Claro! He abierto la sección del Calendario Oficial para que puedas verlo o descargarlo."
+    },
+    {
+      "intent": "Proximos_Una_Semana",
+      "opcionMenu": "1",
+      "descripcion": "Próximos eventos con límite de una semana (7 días: del 15 al 22 de octubre de 2026)",
+      "samples": [
+        "que eventos hay esta semana",
+        "proximos eventos de la semana",
+        "que eventos se van a hacer en los proximos 7 dias",
+        "eventos cercanos de esta semana",
+        "cual es el proximo evento"
+      ],
+      "response": "Tomando en cuenta el **límite de 1 semana (del 15 al 22 de octubre de 2026)**, estos son los **3 próximos eventos oficiales** en el ITGAM:\n• **21 de octubre de 2026 (En 6 días)**: Aplicación de la Evaluación 2 por regiones del ENECB 2026 (#126) en el Centro de Cómputo.\n• **22 de octubre de 2026 (En 7 días)**: Curso de Inducción de Servicio Social (#127) en el Auditorio Principal.\n• **22 de octubre de 2026 (En 7 días)**: Ceremonia Solemne de Titulación (#128) en el Auditorio Principal.",
+      "followUpQ": "¿Deseas ir al apartado de '⏳ Próximos (1 Semana)' para ver sus tarjetas a detalle?",
+      "followUpA": "¡Listo! Te he llevado al apartado de Próximos Eventos de esta semana."
+    },
+    {
+      "intent": "Eventos_En_Vivo_Ahora",
+      "opcionMenu": "1",
+      "descripcion": "Eventos que están sucediendo en vivo hoy y transmisión en Facebook Live",
+      "samples": [
+        "que evento esta sucediendo en vivo",
+        "hay algun evento en vivo hoy",
+        "ver transmision en vivo del evento",
+        "facebook live del itgam",
+        "que actividades hay hoy 15 de octubre"
+      ],
+      "response": "🔴 **¡En vivo hoy (15 de octubre de 2026)!** Actualmente están en curso:\n• **Actividad #122**: Promoción, difusión de la oferta educativa y entrega de fichas para el periodo enero–junio 2027.\n• **Actividad #114**: Sesiones de hoy de los Talleres de Actividades Complementarias en Canchas, Explanada y Edificio 2.\nAdemás, en la pestaña **'📅 2. Eventos y En Vivo'** integré el **Reproductor de Transmisión en Vivo de Facebook Live del ITGAM**.",
+      "followUpQ": "¿Quieres que abra ahora mismo la sección de Transmisión en Vivo?",
+      "followUpA": "¡Abierto! Aquí puedes ver el reproductor de Facebook Live del ITGAM y los eventos en curso."
+    },
+    {
+      "intent": "Eventos_Programados_Futuro",
+      "opcionMenu": "1",
+      "descripcion": "Eventos que solo están programados pero aún no se han hecho por su fecha",
+      "samples": [
+        "eventos programados que no se han hecho",
+        "que eventos estan programados para noviembre y diciembre",
+        "eventos futuros del calendario",
+        "cuando es el festival de dia de muertos y el congreso internacional"
+      ],
+      "response": "Los **eventos programados que aún no se han realizado por su fecha** (posteriores a esta semana, del **24 de octubre de 2026 al 6 de enero de 2027**) incluyen **39 actividades oficiales**, entre ellas:\n• **24 oct**: Inicio de 2do. módulo de Contador Público (#129)\n• **29 y 30 oct**: Recital de Calaveritas Literarias (#131) y Festival de Día de Muertos (#132)\n• **04 al 06 nov**: Inducción (#136) y Taller de Reporte Preliminar de Residencias (#137)\n• **11 al 13 nov**: 2do. Congreso Internacional del ITGAM (#139)\n• **19 y 20 nov**: Día Nacional del Libro (#142) y Ceremonia de la Revolución Mexicana (#144)\n• **30 nov al 04 dic**: InnovaTecNM Etapa Nacional (#148/#151) y Festival Navideño (#153).",
+      "followUpQ": "¿Deseas abrir el apartado de '🗓️ 3. Solo Programados' para explorarlos todos?",
+      "followUpA": "¡Listo! Aquí tienes todos los eventos programados a futuro."
+    },
+    {
+      "intent": "Eventos_Reales_Pasados",
+      "opcionMenu": "1",
+      "descripcion": "Eventos reales que ya sucedieron de julio/agosto hasta el 14 de octubre de 2026",
+      "samples": [
+        "que eventos ya pasaron en el itgam",
+        "eventos que ya sucedieron",
+        "hackatec regional sede itgam innovatecnm 2026",
+        "cuando fue sede el itgam del hackatec regional",
+        "17 aniversario del itgam encuentro de egresados alfabetizatec cultura de paz"
+      ],
+      "response": "En el apartado de **'✅ 4. Eventos que Ya Sucedieron'** (de julio y agosto hasta el 14 de octubre de 2026) tenemos registrados **44 eventos oficiales concluidos**, destacando:\n• **24 y 25 ago**: Inicio de cursos (#107) y Ceremonia de Inauguración (#110)\n• **02 sep**: Ceremonia del 17vo. Aniversario del ITGAM (#112)\n• **15 sep**: Ceremonia Cívica de la Independencia (#115)\n• **28 sep al 01 oct**: **Etapa Regional de InnovaTecNM 2026 y HackaTecNM (Región 5) con Sede en el ITGAM** (#119 y #123)\n• **08 oct**: Conferencia 'Cultura de Paz y No Violencia' (Facebook ITGAM)\n• **10 oct**: 10° Encuentro de Egresados (#125)\n• **12 al 14 oct**: Jornada 'AlfabetizaTec' y Prerregistro de Inglés C.L.E.",
+      "followUpQ": "¿Deseas ver el listado completo de eventos que ya sucedieron?",
+      "followUpA": "¡Claro! Te muestro el historial completo en la pestaña de Eventos."
+    },
+    {
+      "intent": "Consultar_General",
+      "opcionMenu": "1",
+      "descripcion": "Información general del calendario escolar CAL_AGO-DIC26.pdf",
+      "samples": [
+        "que eventos hay en la escuela",
+        "informacion general de eventos del itgam",
+        "calendario general de eventos de este mes",
+        "ver el calendario oficial en pdf cal ago dic26"
+      ],
+      "response": "En el ITGAM contamos con el **Calendario Escolar Oficial Agosto–Diciembre 2026 (`CAL_AGO-DIC26.pdf`)** dividido en 4 apartados claros: **1) Próximos (límite de 1 semana)**, **2) En Vivo Hoy**, **3) Programados a futuro** y **4) Eventos que ya sucedieron**.",
+      "followUpQ": "¿Deseas abrir el Calendario Oficial en PDF (`CAL_AGO-DIC26.pdf`) para verlo o descargarlo?",
+      "followUpA": "¡Listo! Te he llevado al apartado del Calendario Oficial en PDF."
+    },
+    {
+      "intent": "Consultar_Hackatec",
+      "opcionMenu": "1",
+      "descripcion": "Información de HackaTec e InnovaTecNM 2026",
+      "samples": [
+        "de que trata el hackatec",
+        "cuando se llevara a cabo el hackatec de este semestre",
+        "cuando es el hackathon del itgam",
+        "hasta que fecha tengo para registrar a mi equipo en el hackathon",
+        "cuantos integrantes por equipo en el hackatec"
+      ],
+      "response": "El HackaTecNM / InnovaTecNM es nuestro desafío tecnológico institucional enfocado en resolver problemáticas reales mediante software, hardware e IA. 🤖 Del **28 de septiembre al 1 de octubre de 2026** el ITGAM fue **Sede Oficial de la Etapa Regional (Región 5)** (#119 y #123), y del **30 de noviembre al 4 de diciembre de 2026** se celebra la **Etapa Nacional de InnovaTecNM 2026** (#148 y #151). Los equipos se conforman de 3 a 5 estudiantes.",
+      "followUpQ": "¿Te gustaría conocer los criterios de evaluación del jurado?",
+      "followUpA": "El jurado evalúa Innovación (30%), Funcionalidad (40%) y Presentación del Pitch (30%)."
+    },
+    {
+      "intent": "Cursos_Complementarias",
+      "opcionMenu": "7",
+      "descripcion": "Cursos de actividades complementarias, extraescolares e inglés CLE",
+      "samples": [
+        "que cursos de actividades complementarias hay en el itgam",
+        "talleres extraescolares culturales y deportivos",
+        "cursos de ingles cle coordinacion de lenguas extranjeras",
+        "como libero mis 5 creditos complementarios"
+      ],
+      "response": "En el ITGAM se imparten 18 cursos y talleres oficiales (iniciados el **7 de septiembre** #114, con cierre el **4 de diciembre** #154 y entrega de liberación de créditos el **11 de diciembre** #160): Culturales (Pintura, Serigrafía, Cartonería, Lettering, Dibujo, Teatro, Danza, Salsa y Música), Deportivos (Fútbol, Básquetbol, Voleibol, Ajedrez), Cívicos (Banda de Guerra y Escolta), Inglés (C.L.E.) y Talleres TI.",
+      "followUpQ": "¿Deseas abrir el catálogo completo de los 18 cursos y horarios?",
+      "followUpA": "Puedes consultar los 18 talleres en la pestaña '🎓 4. Cursos y Complementarias'."
+    },
+    {
+      "intent": "Requisitos_Oyente",
+      "opcionMenu": "2",
+      "descripcion": "Requisitos para entrar a pláticas, conferencias y talleres",
+      "samples": [
+        "que necesito para entrar a la platica",
+        "que requisitos piden para inscribirse en los talleres de tecnologia",
+        "puedo invitar a un amigo de otra universidad a las conferencias"
+      ],
+      "response": "Para asistir como oyente a conferencias únicamente requieres tu número de control activo y pre-registro en línea (para talleres de tecnología lleva tu laptop). Los invitados externos pueden ingresar con registro previo e identificación oficial (INE, pasaporte o credencial escolar).",
+      "followUpQ": "¿Deseas saber cómo se registra la asistencia?",
+      "followUpA": "La asistencia se registra escaneando el código QR proyectado al inicio y al final de cada conferencia."
+    },
+    {
+      "intent": "Requisitos_Deportes",
+      "opcionMenu": "2",
+      "descripcion": "Requisitos e inscripción para torneos deportivos",
+      "samples": [
+        "que piden para jugar fut",
+        "como me inscribo al torneo de voleibol mixto",
+        "requisitos para torneos deportivos futbol basquetbol",
+        "donde recojo mi kit deportivo y carrera atletica"
+      ],
+      "response": "Para inscribirte en torneos deportivos debes descargar la cédula en Actividades Extraescolares (Edificio 2) y presentar: **credencial vigente, seguro facultativo activo, Carta Responsiva y certificado médico del ITGAM**. ⚽🏐",
+      "followUpQ": "¿Deseas ver en el croquis aéreo dónde están ubicadas las Canchas?",
+      "followUpA": "¡Claro! He abierto el Croquis Aéreo del ITGAM señalando las Canchas."
+    },
+    {
+      "intent": "Horario_Matutino",
+      "opcionMenu": "3",
+      "descripcion": "Horarios matutinos, vespertinos y de fin de semana",
+      "samples": [
+        "a que hora son los eventos en la mañana",
+        "horarios de conferencias turno matutino y vespertino",
+        "los alumnos del turno vespertino tambien pueden entrar a las actividades de la mañana",
+        "tienen eventos programados durante los fines de semana",
+        "a que hora inicia el registro para la carrera atletica"
+      ],
+      "response": "Las conferencias matutinas inician a las **10:00 hrs** y las vespertinas a las **16:00 hrs** (abiertas para ambos turnos). El registro de la carrera atlética abre a las **07:00 hrs** en la Explanada, y en sábado hay módulo de Contador Público (#129 el 24 de octubre), Banda de Guerra y Danza Urbana.",
+      "followUpQ": "¿Te gustaría consultar todas las fechas en el calendario?",
+      "followUpA": "Puedes revisar todas las fechas en la pestaña '📅 2. Eventos y En Vivo'."
+    },
+    {
+      "intent": "Horario_Talleres",
+      "opcionMenu": "3",
+      "descripcion": "Horarios del taller de Python y talleres de residencias",
+      "samples": [
+        "a que hora es el taller de python",
+        "horario del taller de vision artificial",
+        "que pasa si me inscribo a un taller y falto el dia del evento"
+      ],
+      "response": "El Taller de Visión Artificial con Python se imparte los **miércoles de 12:00 a 15:00 hrs en el Laboratorio de Cómputo 2 (Edificio 1)**, y el Taller de Reporte Preliminar de Residencias el **05 y 06 de noviembre (#137)**. Si faltas o llegas 10 minutos tarde, tu lugar se cede a la lista de espera.",
+      "followUpQ": "¿Deseas saber cómo cancelar tu asistencia si no podrás ir?",
+      "followUpA": "Entra al portal con tu número de control, ve a 'Mis Eventos' y selecciona 'Cancelar asistencia'."
+    },
+    {
+      "intent": "Consultar_Costos",
+      "opcionMenu": "4",
+      "descripcion": "Costos de conferencias, congresos y eventos",
+      "samples": [
+        "cuanto cobran la entrada al congreso",
+        "que costo tiene asistir a las conferencias de la semana de ingenieria",
+        "tienen costo los eventos o torneos del itgam",
+        "es gratis entrar a las platicas"
+      ],
+      "response": "¡Buenas noticias! 🎉 Todas las conferencias magnas, el **2do. Congreso Internacional del ITGAM (11 al 13 de noviembre)**, los festivales culturales y los torneos internos son **100% gratuitos**.",
+      "followUpQ": "¿Deseas confirmar si las constancias tienen algún costo?",
+      "followUpA": "La constancia digital oficial emitida por el ITGAM también es 100% gratuita al cumplir el 80% de asistencia."
+    },
+    {
+      "intent": "Costo_Certificacion",
+      "opcionMenu": "4",
+      "descripcion": "Costos de constancias y certificaciones externas",
+      "samples": [
+        "tiene costo la constancia del curso",
+        "se entrega constancia con valor curricular al terminar las conferencias",
+        "como descargo mi constancia en pdf"
+      ],
+      "response": "La constancia digital oficial con valor curricular emitida por el ITGAM es **completamente gratuita** y se descarga en PDF 5 días después del evento con tu número de control.",
+      "followUpQ": "¿Quieres saber qué porcentaje de asistencia necesitas?",
+      "followUpA": "Necesitas cubrir al menos el 80% de asistencia escaneando el código QR al inicio y al final."
+    },
+    {
+      "intent": "Ubicacion_Auditorio",
+      "opcionMenu": "5",
+      "descripcion": "Ubicación de sedes en el croquis aéreo y Google Maps",
+      "samples": [
+        "donde queda el auditorio",
+        "en que parte del campus queda el auditorio principal",
+        "donde se realizan los torneos de futbol y basquetbol del itgam",
+        "ubicacion de las canchas y centro de computo",
+        "ver croquis aereo mapa de la escuela edificios"
+      ],
+      "response": "En nuestra **Vista Satelital Aérea del ITGAM** (Av. 608 y Av. 412 No. 300) los edificios están identificados así:\n• **EDIFICIO 1 (Arriba Izquierda)**: Aulas, Centro de Cómputo y Vinculación.\n• **EXPLANADA (Abajo Izquierda)**: Explanada Cívica Principal.\n• **CANCHAS (Al Centro)**: Cancha multideportiva.\n• **AUDITORIO (Derecha Superior)**: Planta baja junto a Biblioteca (aforo 250 personas).\n• **EDIFICIO 2 (Derecha Inferior)**: Biblioteca Central, Inglés C.L.E. y Extraescolares.",
+      "followUpQ": "¿Deseas que abra el Croquis Aéreo interactivo y Google Maps Satélite?",
+      "followUpA": "¡Claro! He abierto la vista aérea satelital con los edificios señalados."
+    },
+    {
+      "intent": "Aforo_Sedes",
+      "opcionMenu": "5",
+      "descripcion": "Capacidad y aforo del Auditorio Principal",
+      "samples": [
+        "cuanta gente cabe en el auditorio",
+        "cual es el aforo maximo del auditorio principal",
+        "cuantas personas caben sentadas en el auditorio"
+      ],
+      "response": "El Auditorio Principal del ITGAM cuenta con un aforo máximo de **250 personas cómodamente sentadas** y abre puertas 30 minutos antes.",
+      "followUpQ": "¿Deseas ver su ubicación en el Croquis Aéreo?",
+      "followUpA": "¡Listo! Te muestro el Auditorio en la vista aérea satelital."
+    },
+    {
+      "intent": "Contacto_Correo",
+      "opcionMenu": "6",
+      "descripcion": "Correos electrónicos y teléfonos oficiales",
+      "samples": [
+        "donde estan los organizadores",
+        "a que correo mando mi registro",
+        "cual es el correo de contacto de los organizadores de los eventos",
+        "telefono y extension de eventos itgam"
+      ],
+      "response": "Puedes comunicarte a **eventos@itgam.tecnm.mx**, en Vinculación (Edificio 1, Ventanilla 4) a **vin_gamadero@tecnm.mx** (Tel. 55 3075 3703), en Extraescolares (Edificio 2) a **ext_gamadero@tecnm.mx** o al conmutador **(55) 2651-7864 Ext. 1104**. Página web: **[gamadero.tecnm.mx](https://www.gamadero.tecnm.mx/)**.",
+      "followUpQ": "¿Deseas ir a la página web oficial del ITGAM o a su Facebook?",
+      "followUpA": "Usa los botones '🌐 Web Oficial ITGAM' o '📘 Facebook ITGAM' en la parte superior derecha."
+    },
+    {
+      "intent": "FAQ_Creditos",
+      "opcionMenu": "7",
+      "descripcion": "Liberación de créditos complementarios y justificantes",
+      "samples": [
+        "estos eventos dan creditos",
+        "los eventos del instituto otorgan creditos complementarios",
+        "dan justificante escolar si el evento coincide con mi horario de clases",
+        "que porcentaje de asistencia necesito para acreditar el simposio"
+      ],
+      "response": "¡Sí! Participar en congresos, talleres extraescolares y torneos oficiales otorga entre **0.5 y 1 crédito complementario** cubriendo el **80% de asistencia**. La entrega de liberación de créditos de este semestre es el **11 de diciembre de 2026 (#160)**.",
+      "followUpQ": "¿Quieres ver los 18 cursos disponibles para liberar créditos?",
+      "followUpA": "Encuéntralos todos en la pestaña '🎓 4. Cursos y Complementarias'."
+    },
+    {
+      "intent": "Soporte_Humano",
+      "opcionMenu": "8",
+      "descripcion": "Hablar con un asesor humano del comité",
+      "samples": [
+        "quiero hablar con una persona real",
+        "comunicarme con un asesor humano",
+        "pasame con alguien del comite organizador"
+      ],
+      "response": "Te estamos comunicando con un asesor del comité organizador de eventos del ITGAM; el tiempo promedio de espera es de **3 minutos**. 👨‍💼",
+      "followUpQ": "¿Confirmas que deseas iniciar tu turno de atención?",
+      "followUpA": "¡Excelente! Tu solicitud ha sido turnada a un asesor en línea."
+    }
+  ],
   "eventos_reales_itgam": [
     {
-      "id": "PDF-87",
-      "num": 87,
-      "mes": "Julio",
-      "fecha": "06 al 31 de julio 2026",
-      "titulo": "Periodo de receso de actividades académico administrativas",
-      "categoria": "Académico-Administrativo",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
-      "sede": "Campus ITGAM",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-88",
-      "num": 88,
-      "mes": "Agosto",
-      "fecha": "03 de agosto 2026",
-      "titulo": "Reanudación de actividades académico - administrativas",
-      "categoria": "Académico-Administrativo",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
-      "sede": "Campus ITGAM",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-89",
-      "num": 89,
-      "mes": "Agosto",
-      "fecha": "03 al 07 de agosto 2026",
-      "titulo": "Recepción de anteproyectos de Residencias Profesionales (semestre ago–dic 2026)",
-      "categoria": "Residencias y Titulación",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
-      "sede": "División de Estudios Profesionales (Edificio 1)",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-90",
-      "num": 90,
-      "mes": "Agosto",
-      "fecha": "03 al 10 de agosto 2026",
-      "titulo": "Recepción de documentos para titulación",
-      "categoria": "Residencias y Titulación",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
-      "sede": "División de Estudios Profesionales",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-91",
-      "num": 91,
-      "mes": "Agosto",
-      "fecha": "03 al 14 de agosto 2026",
-      "titulo": "Pago de reinscripción con cuenta referenciada y en línea",
-      "categoria": "Académico-Administrativo",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
-      "sede": "Portal en línea ITGAM / Banco",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-92",
-      "num": 92,
-      "mes": "Agosto",
-      "fecha": "03 al 21 de agosto 2026",
-      "titulo": "Cursos intersemestrales para el personal docente",
-      "categoria": "Académico y Tecnológico",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
-      "sede": "Aulas y Laboratorios (Edificio 1 y 2)",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-93",
-      "num": 93,
-      "mes": "Agosto",
-      "fecha": "07 de agosto 2026",
-      "titulo": "Examen de Admisión Convocatoria agosto–diciembre 2026",
-      "categoria": "Académico-Administrativo",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
-      "sede": "Centro de Cómputo / Campus ITGAM",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-94",
-      "num": 94,
-      "mes": "Agosto",
-      "fecha": "10 de agosto 2026",
-      "titulo": "Carta de No Inconveniencia a DEP (para el proceso de toma de protesta)",
-      "categoria": "Residencias y Titulación",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
-      "sede": "División de Estudios Profesionales",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-95",
-      "num": 95,
-      "mes": "Agosto",
-      "fecha": "10 al 21 de agosto 2026",
-      "titulo": "Curso Propedéutico para Nuevo Ingreso",
-      "categoria": "Académico y Tecnológico",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
-      "sede": "Edificio 1 y Edificio 2",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-96",
-      "num": 96,
-      "mes": "Agosto",
-      "fecha": "11 de agosto 2026",
-      "titulo": "Última fecha para la gestión de traslados estudiantiles de acuerdo al lineamiento",
-      "categoria": "Académico-Administrativo",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
-      "sede": "Servicios Escolares",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-97",
-      "num": 97,
-      "mes": "Agosto",
-      "fecha": "11 al 13 de agosto 2026",
-      "titulo": "Pago de inscripción de estudiantes de nuevo ingreso",
-      "categoria": "Académico-Administrativo",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
-      "sede": "Portal en línea ITGAM",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-98",
-      "num": 98,
-      "mes": "Agosto",
-      "fecha": "13 de agosto 2026",
-      "titulo": "Ceremonia de toma de protesta (Titulación)",
-      "categoria": "Cívico e Institucional",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
-      "sede": "Auditorio Principal (Edificio 2)",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-99",
-      "num": 99,
-      "mes": "Agosto",
-      "fecha": "14 de agosto 2026",
-      "titulo": "Entrega de Gestión del Curso e Instrumentación Didáctica",
-      "categoria": "Académico-Administrativo",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
-      "sede": "Departamentos Académicos",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-100",
-      "num": 100,
-      "mes": "Agosto",
-      "fecha": "17 y 18 de agosto 2026",
-      "titulo": "Inscripción, recepción de documentos y toma de fotografía de alumno de Nuevo Ingreso",
-      "categoria": "Académico-Administrativo",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
-      "sede": "Explanada y Servicios Escolares",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-101",
-      "num": 101,
-      "mes": "Agosto",
-      "fecha": "18 al 20 de agosto 2026",
-      "titulo": "Reinscripciones al periodo agosto–diciembre 2026",
-      "categoria": "Académico-Administrativo",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
-      "sede": "Sistema SIE ITGAM",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-102",
-      "num": 102,
-      "mes": "Agosto",
-      "fecha": "20 de agosto 2026",
-      "titulo": "Cursos de inducción de Servicio Social",
-      "categoria": "Cívico e Institucional",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
-      "sede": "Auditorio Principal (Edificio 2)",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-103",
-      "num": 103,
-      "mes": "Agosto",
-      "fecha": "21 de agosto 2026",
-      "titulo": "Consulta de cargas académicas y Kardex en SIE",
-      "categoria": "Académico-Administrativo",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
-      "sede": "Sistema SIE ITGAM",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-104",
-      "num": 104,
-      "mes": "Agosto",
-      "fecha": "21 de agosto 2026",
-      "titulo": "Entrega de credenciales para estudiantes de Nuevo Ingreso",
-      "categoria": "Académico-Administrativo",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
-      "sede": "Explanada / Servicios Escolares",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-105",
-      "num": 105,
-      "mes": "Agosto",
-      "fecha": "21 de agosto 2026",
-      "titulo": "Curso de inducción de estudiantes de Nuevo Ingreso",
-      "categoria": "Cívico e Institucional",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
-      "sede": "Auditorio Principal (Edificio 2)",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-106",
-      "num": 106,
-      "mes": "Agosto",
-      "fecha": "21 de agosto 2026",
-      "titulo": "Entrega de oficio de aprobación de anteproyectos y asignación de asesores de Residencias",
-      "categoria": "Residencias y Titulación",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
-      "sede": "Jefaturas Académicas",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-107",
-      "num": 107,
-      "mes": "Agosto",
-      "fecha": "24 de agosto 2026",
-      "titulo": "Inicio de cursos del ciclo escolar agosto–diciembre 2026",
-      "categoria": "Académico y Tecnológico",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
-      "sede": "Edificio 1 y Edificio 2",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-108",
-      "num": 108,
-      "mes": "Agosto",
-      "fecha": "24 de agosto 2026",
-      "titulo": "Entrega de Asignación de Asesores para Residencias Profesionales a la DEP",
-      "categoria": "Residencias y Titulación",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
-      "sede": "División de Estudios Profesionales",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-109",
-      "num": 109,
-      "mes": "Agosto",
-      "fecha": "24 al 28 de agosto 2026",
-      "titulo": "Resello de credenciales estudiantiles",
-      "categoria": "Académico-Administrativo",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
-      "sede": "Servicios Escolares",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-110",
-      "num": 110,
-      "mes": "Agosto",
-      "fecha": "25 de agosto 2026",
-      "titulo": "Ceremonia de inauguración del ciclo escolar agosto–diciembre 2026",
-      "categoria": "Cívico e Institucional",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
-      "sede": "Explanada / Auditorio Principal",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-111",
-      "num": 111,
-      "mes": "Agosto",
-      "fecha": "29 de agosto 2026",
-      "titulo": "Inicio de 1er. Módulo de la modalidad mixta de Contador Público",
-      "categoria": "Académico y Tecnológico",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
-      "sede": "Edificio 1",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-112",
-      "num": 112,
-      "mes": "Septiembre",
-      "fecha": "02 de septiembre 2026",
-      "titulo": "Ceremonia del 17vo. Aniversario del ITGAM",
-      "categoria": "Cívico e Institucional",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 2) y Facebook",
-      "sede": "Explanada y Auditorio Principal",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-113",
-      "num": 113,
-      "mes": "Septiembre",
-      "fecha": "04 de septiembre 2026",
-      "titulo": "Fecha límite para baja de asignaturas de acuerdo al lineamiento",
-      "categoria": "Académico-Administrativo",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
-      "sede": "División de Estudios Profesionales",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-114",
-      "num": 114,
-      "mes": "Septiembre",
-      "fecha": "07 de septiembre 2026",
-      "titulo": "Inicio de Actividades Complementarias agosto–diciembre 2026",
-      "categoria": "Cultural, Deportivo y Extraescolar",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
-      "sede": "Canchas, Explanada y Edificio 2",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-115",
-      "num": 115,
-      "mes": "Septiembre",
-      "fecha": "15 de septiembre 2026",
-      "titulo": "Ceremonia cívica en conmemoración del Día de la Independencia de México",
-      "categoria": "Cívico e Institucional",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 2) y Facebook",
-      "sede": "Explanada Principal",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-116",
-      "num": 116,
-      "mes": "Septiembre",
-      "fecha": "18 de septiembre 2026",
-      "titulo": "Fecha límite para baja temporal de acuerdo con el lineamiento",
-      "categoria": "Académico-Administrativo",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
-      "sede": "División de Estudios Profesionales",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-117",
-      "num": 117,
-      "mes": "Septiembre",
-      "fecha": "23 al 25 de septiembre 2026",
-      "titulo": "1er. Seguimiento de Residencias Profesionales",
-      "categoria": "Residencias y Titulación",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
-      "sede": "División de Estudios Profesionales",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-118",
-      "num": 118,
-      "mes": "Septiembre",
-      "fecha": "25 de septiembre 2026",
-      "titulo": "Primer Seguimiento de la Gestión del Curso",
-      "categoria": "Académico-Administrativo",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
-      "sede": "Departamentos Académicos",
-      "estado": "Pasado"
-    },
-    {
-      "id": "FB-01",
-      "num": "FB",
-      "mes": "Septiembre",
-      "fecha": "27 de septiembre 2026",
-      "titulo": "Recepción y Registro de Delegaciones en el ITGAM como Sede Regional de InnovaTecNM 2026",
-      "categoria": "Facebook Oficial ITGAM",
-      "origen": "Facebook Oficial ITGAM",
-      "sede": "Explanada y Edificio 1 ITGAM",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-119",
-      "num": 119,
-      "mes": "Septiembre",
-      "fecha": "28 al 30 de septiembre 2026",
-      "titulo": "InnovaTecNM 2026 en su Etapa Regional (Región 5 — Sede Oficial ITGAM)",
-      "categoria": "Académico y Tecnológico",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 2) y Facebook",
-      "sede": "Lienzo Charro Carlos Rincón Gallardo y Campus ITGAM",
-      "estado": "Pasado"
-    },
-    {
-      "id": "FB-02",
-      "num": "FB",
-      "mes": "Septiembre",
-      "fecha": "29 de septiembre 2026",
-      "titulo": "Etapa Regional de HackaTecNM 2026 en el ITGAM y Danza de las Esporas (Región 5)",
-      "categoria": "Facebook Oficial ITGAM",
-      "origen": "Facebook Oficial ITGAM",
-      "sede": "Centro de Cómputo (Edificio 1) y Explanada",
-      "estado": "Pasado"
-    },
-    {
-      "id": "FB-03",
-      "num": "FB",
-      "mes": "Septiembre",
-      "fecha": "29 de septiembre 2026",
-      "titulo": "Actividades de Integración Estudiantil en InnovaTecNM 2026 Sede ITGAM",
-      "categoria": "Facebook Oficial ITGAM",
-      "origen": "Facebook Oficial ITGAM",
-      "sede": "Canchas y Explanada ITGAM",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-120",
-      "num": 120,
-      "mes": "Septiembre",
-      "fecha": "28 al 30 de septiembre 2026",
-      "titulo": "Evento Nacional Estudiantil de Ciencias Básicas (ENECB), aplicación de la evaluación 1 Etapa local",
-      "categoria": "Académico y Tecnológico",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
-      "sede": "Centro de Cómputo (Edificio 1)",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-121",
-      "num": 121,
-      "mes": "Octubre",
-      "fecha": "01 de octubre 2026",
-      "titulo": "Publicación de la convocatoria para aspirantes a Nuevo Ingreso (periodo enero–junio 2027)",
-      "categoria": "Académico-Administrativo",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
-      "sede": "Portal Web Oficial ITGAM y Facebook",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-122",
+      "id": "LIVE-01",
       "num": 122,
       "mes": "Octubre",
-      "fecha": "01 al 30 de octubre 2026",
+      "fecha": "01 al 30 de octubre 2026 (Activo Hoy 15 de Octubre)",
+      "diasRestantes": "En vivo hoy",
       "titulo": "Promoción, difusión de la oferta educativa, entrega de fichas y guías de estudio (enero–junio 2027)",
       "categoria": "Académico-Administrativo",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
-      "sede": "Departamento de Desarrollo Académico / Web",
-      "estado": "En curso"
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 2) y Transmisión Facebook ITGAM",
+      "sede": "Departamento de Desarrollo Académico / Portal Web ITGAM",
+      "estado": "EN_VIVO",
+      "etiquetaEstado": "🔴 Sucediendo en Vivo (Hoy 15 Oct)"
     },
     {
-      "id": "PDF-123",
-      "num": 123,
+      "id": "LIVE-02",
+      "num": 114,
       "mes": "Octubre",
-      "fecha": "01 de octubre 2026",
-      "titulo": "InnovaTecNM 2026 en su Etapa Regional (Ceremonia de Clausura y Resultados en el ITGAM)",
-      "categoria": "Académico y Tecnológico",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 2) y Facebook",
-      "sede": "Auditorio Principal y Explanada ITGAM",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-124",
-      "num": 124,
-      "mes": "Octubre",
-      "fecha": "01 y 02 de octubre 2026",
-      "titulo": "Evento Nacional Estudiantil de Ciencias Básicas, aplicación de la evaluación 1 Etapa Local",
-      "categoria": "Académico y Tecnológico",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
-      "sede": "Centro de Cómputo (Edificio 1)",
-      "estado": "Pasado"
-    },
-    {
-      "id": "FB-04",
-      "num": "FB",
-      "mes": "Octubre",
-      "fecha": "08 de octubre 2026",
-      "titulo": "Conferencia Magistral: Cultura de Paz y No Violencia",
-      "categoria": "Facebook Oficial ITGAM",
-      "origen": "Facebook Oficial ITGAM",
-      "sede": "Auditorio Principal (Edificio 2)",
-      "estado": "Pasado"
-    },
-    {
-      "id": "PDF-125",
-      "num": 125,
-      "mes": "Octubre",
-      "fecha": "10 de octubre 2026",
-      "titulo": "10° Encuentro de Egresados ITGAM",
-      "categoria": "Cívico e Institucional",
-      "origen": "CAL_AGO-DIC26.pdf (Pág. 2) y Facebook",
-      "sede": "Auditorio Principal y Explanada",
-      "estado": "Pasado"
-    },
-    {
-      "id": "FB-05",
-      "num": "FB",
-      "mes": "Octubre",
-      "fecha": "12 de octubre 2026",
-      "titulo": "Jornada Educativa y Social: Programa AlfabetizaTec en el ITGAM",
-      "categoria": "Facebook Oficial ITGAM",
-      "origen": "Facebook Oficial ITGAM",
-      "sede": "Vinculación y Comunidad GAM",
-      "estado": "Pasado"
-    },
-    {
-      "id": "FB-06",
-      "num": "FB",
-      "mes": "Octubre",
-      "fecha": "12 al 14 de octubre 2026",
-      "titulo": "Convocatoria y Prerregistro de Inglés en el ITGAM — Coordinación de Lenguas Extranjeras (CLE)",
-      "categoria": "Facebook Oficial ITGAM",
-      "origen": "Facebook Oficial ITGAM",
-      "sede": "Coordinación de Lenguas Extranjeras (Edificio 2)",
-      "estado": "Pasado"
+      "fecha": "Jueves 15 de octubre 2026 (11:00 - 15:00 hrs)",
+      "diasRestantes": "En vivo hoy",
+      "titulo": "Sesiones de Talleres de Actividades Complementarias (Dibujo Artístico, Básquetbol y Difusión Cultural)",
+      "categoria": "Cultural, Deportivo y Extraescolar",
+      "origen": "CAL_AGO-DIC26.pdf (#114) y Facebook Oficial ITGAM",
+      "sede": "Canchas, Explanada y Edificio 2 ITGAM",
+      "estado": "EN_VIVO",
+      "etiquetaEstado": "🔴 Sucediendo en Vivo (Hoy 15 Oct)"
     },
     {
       "id": "PDF-126",
       "num": 126,
       "mes": "Octubre",
       "fecha": "21 de octubre 2026",
-      "titulo": "Aplicación de la Evaluación 2 por regiones ENECB 2026",
+      "diasRestantes": "En 6 días (Dentro de esta semana)",
+      "titulo": "Aplicación de la Evaluación 2 por regiones del Evento Nacional Estudiantil de Ciencias Básicas (ENECB 2026)",
       "categoria": "Académico y Tecnológico",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
       "sede": "Centro de Cómputo (Edificio 1)",
-      "estado": "Próximo"
+      "estado": "PROXIMO_SEMANA",
+      "etiquetaEstado": "⏳ Próximo (En 6 días • Límite 1 semana)"
     },
     {
       "id": "PDF-127",
       "num": 127,
       "mes": "Octubre",
       "fecha": "22 de octubre 2026",
+      "diasRestantes": "En 7 días (Límite exacto de 1 semana)",
       "titulo": "Curso de Inducción de Servicio Social",
       "categoria": "Cívico e Institucional",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
       "sede": "Auditorio Principal (Edificio 2)",
-      "estado": "Próximo"
+      "estado": "PROXIMO_SEMANA",
+      "etiquetaEstado": "⏳ Próximo (En 7 días • Límite 1 semana)"
     },
     {
       "id": "PDF-128",
       "num": 128,
       "mes": "Octubre",
       "fecha": "22 de octubre 2026",
-      "titulo": "Ceremonia de Titulación",
+      "diasRestantes": "En 7 días (Límite exacto de 1 semana)",
+      "titulo": "Ceremonia Solemne de Titulación",
       "categoria": "Residencias y Titulación",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
       "sede": "Auditorio Principal (Edificio 2)",
-      "estado": "Próximo"
+      "estado": "PROXIMO_SEMANA",
+      "etiquetaEstado": "⏳ Próximo (En 7 días • Límite 1 semana)"
     },
     {
       "id": "PDF-129",
@@ -541,7 +407,8 @@
       "categoria": "Académico y Tecnológico",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
       "sede": "Edificio 1",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-130",
@@ -552,7 +419,8 @@
       "categoria": "Residencias y Titulación",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
       "sede": "División de Estudios Profesionales",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-131",
@@ -563,7 +431,8 @@
       "categoria": "Cultural, Deportivo y Extraescolar",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 3)",
       "sede": "Auditorio Principal / Explanada",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-132",
@@ -574,7 +443,8 @@
       "categoria": "Cultural, Deportivo y Extraescolar",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 3)",
       "sede": "Explanada Principal",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-133",
@@ -585,7 +455,8 @@
       "categoria": "Académico-Administrativo",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 3)",
       "sede": "Servicios Escolares",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-134",
@@ -596,7 +467,8 @@
       "categoria": "Académico-Administrativo",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 3)",
       "sede": "Departamentos Académicos",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-135",
@@ -607,7 +479,8 @@
       "categoria": "Académico-Administrativo",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 3)",
       "sede": "Portal Web Oficial ITGAM",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-136",
@@ -618,7 +491,8 @@
       "categoria": "Residencias y Titulación",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 3)",
       "sede": "Auditorio Principal (Edificio 2)",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-137",
@@ -629,7 +503,8 @@
       "categoria": "Residencias y Titulación",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 3)",
       "sede": "Auditorio / Sala Audiovisual",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-138",
@@ -640,7 +515,8 @@
       "categoria": "Residencias y Titulación",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 3)",
       "sede": "División de Estudios Profesionales",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-139",
@@ -651,7 +527,8 @@
       "categoria": "Académico y Tecnológico",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 3)",
       "sede": "Auditorio Principal, Explanada y Edificio 1",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-140",
@@ -662,7 +539,8 @@
       "categoria": "Académico y Tecnológico",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 3)",
       "sede": "Edificio 1 y Edificio 2",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-141",
@@ -673,7 +551,8 @@
       "categoria": "Académico-Administrativo",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 3)",
       "sede": "Sistema SIE ITGAM",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-142",
@@ -684,7 +563,8 @@
       "categoria": "Cultural, Deportivo y Extraescolar",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 3)",
       "sede": "Biblioteca Central (Edificio 2) y Explanada",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-143",
@@ -695,7 +575,8 @@
       "categoria": "Residencias y Titulación",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 3)",
       "sede": "Gestión Tecnológica y Vinculación",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-144",
@@ -706,7 +587,8 @@
       "categoria": "Cívico e Institucional",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 3)",
       "sede": "Explanada Principal",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-145",
@@ -717,7 +599,8 @@
       "categoria": "Académico y Tecnológico",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 3)",
       "sede": "Sede Nacional / Centro de Cómputo",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-146",
@@ -728,7 +611,8 @@
       "categoria": "Cívico e Institucional",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 3)",
       "sede": "Explanada y Auditorio Principal",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-147",
@@ -739,7 +623,8 @@
       "categoria": "Residencias y Titulación",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 3)",
       "sede": "División de Estudios Profesionales",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-148",
@@ -750,7 +635,8 @@
       "categoria": "Académico y Tecnológico",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 3)",
       "sede": "Sede Nacional TecNM",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-149",
@@ -761,7 +647,8 @@
       "categoria": "Residencias y Titulación",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 3)",
       "sede": "División de Estudios Profesionales",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-150",
@@ -772,7 +659,8 @@
       "categoria": "Académico-Administrativo",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 3)",
       "sede": "Portal Web Oficial ITGAM",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-151",
@@ -783,7 +671,8 @@
       "categoria": "Académico y Tecnológico",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 3)",
       "sede": "Sede Nacional TecNM",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-152",
@@ -794,7 +683,8 @@
       "categoria": "Residencias y Titulación",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 3)",
       "sede": "Plataforma Virtual ITGAM",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-153",
@@ -805,7 +695,8 @@
       "categoria": "Cultural, Deportivo y Extraescolar",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 3)",
       "sede": "Explanada Principal",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-154",
@@ -816,7 +707,8 @@
       "categoria": "Cultural, Deportivo y Extraescolar",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 3)",
       "sede": "Departamento de Actividades Extraescolares",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-155",
@@ -827,7 +719,8 @@
       "categoria": "Académico y Tecnológico",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 3)",
       "sede": "Portal Oficial TecNM / ITGAM",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-156",
@@ -838,7 +731,8 @@
       "categoria": "Cívico e Institucional",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 3)",
       "sede": "Auditorio Principal y Explanada",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-157",
@@ -849,7 +743,8 @@
       "categoria": "Residencias y Titulación",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 3)",
       "sede": "División de Estudios Profesionales",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-158",
@@ -860,7 +755,8 @@
       "categoria": "Académico-Administrativo",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 3)",
       "sede": "Campus ITGAM",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-159",
@@ -871,7 +767,8 @@
       "categoria": "Académico-Administrativo",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 3)",
       "sede": "Departamentos Académicos",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-160",
@@ -882,7 +779,8 @@
       "categoria": "Cultural, Deportivo y Extraescolar",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 4)",
       "sede": "Actividades Extraescolares / Servicios Escolares",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-161",
@@ -893,7 +791,8 @@
       "categoria": "Académico y Tecnológico",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 4)",
       "sede": "Edificio 1 y Edificio 2",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-162",
@@ -904,7 +803,8 @@
       "categoria": "Académico-Administrativo",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 4)",
       "sede": "Sistema SIE ITGAM",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-163",
@@ -915,7 +815,8 @@
       "categoria": "Académico-Administrativo",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 4)",
       "sede": "Servicios Escolares",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-164",
@@ -926,7 +827,8 @@
       "categoria": "Académico-Administrativo",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 4)",
       "sede": "Campus ITGAM",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-165",
@@ -937,7 +839,8 @@
       "categoria": "Académico-Administrativo",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 4)",
       "sede": "Campus ITGAM",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-166",
@@ -948,7 +851,8 @@
       "categoria": "Académico-Administrativo",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 4)",
       "sede": "Campus ITGAM",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
     },
     {
       "id": "PDF-167",
@@ -959,7 +863,536 @@
       "categoria": "Académico-Administrativo",
       "origen": "CAL_AGO-DIC26.pdf (Pág. 4)",
       "sede": "Campus ITGAM",
-      "estado": "Próximo"
+      "estado": "PROGRAMADO_FUTURO",
+      "etiquetaEstado": "🗓️ Programado (Aún no realizado)"
+    },
+    {
+      "id": "FB-06",
+      "num": "FB",
+      "mes": "Octubre",
+      "fecha": "12 al 14 de octubre 2026",
+      "titulo": "Convocatoria y Prerregistro de Inglés en el ITGAM — Coordinación de Lenguas Extranjeras (CLE)",
+      "categoria": "Facebook Oficial ITGAM",
+      "origen": "Facebook Oficial ITGAM",
+      "sede": "Coordinación de Lenguas Extranjeras (Edificio 2)",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "FB-05",
+      "num": "FB",
+      "mes": "Octubre",
+      "fecha": "12 de octubre 2026",
+      "titulo": "Jornada Educativa y Social: Programa AlfabetizaTec en el ITGAM",
+      "categoria": "Facebook Oficial ITGAM",
+      "origen": "Facebook Oficial ITGAM",
+      "sede": "Vinculación y Comunidad GAM",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-125",
+      "num": 125,
+      "mes": "Octubre",
+      "fecha": "10 de octubre 2026",
+      "titulo": "10° Encuentro de Egresados ITGAM",
+      "categoria": "Cívico e Institucional",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 2) y Facebook",
+      "sede": "Auditorio Principal y Explanada",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "FB-04",
+      "num": "FB",
+      "mes": "Octubre",
+      "fecha": "08 de octubre 2026",
+      "titulo": "Conferencia Magistral: Cultura de Paz y No Violencia",
+      "categoria": "Facebook Oficial ITGAM",
+      "origen": "Facebook Oficial ITGAM",
+      "sede": "Auditorio Principal (Edificio 2)",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-124",
+      "num": 124,
+      "mes": "Octubre",
+      "fecha": "01 y 02 de octubre 2026",
+      "titulo": "Evento Nacional Estudiantil de Ciencias Básicas, aplicación de la evaluación 1 Etapa Local",
+      "categoria": "Académico y Tecnológico",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
+      "sede": "Centro de Cómputo (Edificio 1)",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-123",
+      "num": 123,
+      "mes": "Octubre",
+      "fecha": "01 de octubre 2026",
+      "titulo": "InnovaTecNM 2026 en su Etapa Regional (Ceremonia de Clausura y Resultados en el ITGAM)",
+      "categoria": "Académico y Tecnológico",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 2) y Facebook",
+      "sede": "Auditorio Principal y Explanada ITGAM",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-121",
+      "num": 121,
+      "mes": "Octubre",
+      "fecha": "01 de octubre 2026",
+      "titulo": "Publicación de la convocatoria para aspirantes a Nuevo Ingreso (periodo enero–junio 2027)",
+      "categoria": "Académico-Administrativo",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
+      "sede": "Portal Web Oficial ITGAM y Facebook",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-120",
+      "num": 120,
+      "mes": "Septiembre",
+      "fecha": "28 al 30 de septiembre 2026",
+      "titulo": "Evento Nacional Estudiantil de Ciencias Básicas (ENECB), aplicación de la evaluación 1 Etapa local",
+      "categoria": "Académico y Tecnológico",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
+      "sede": "Centro de Cómputo (Edificio 1)",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "FB-03",
+      "num": "FB",
+      "mes": "Septiembre",
+      "fecha": "29 de septiembre 2026",
+      "titulo": "Actividades de Integración Estudiantil en InnovaTecNM 2026 Sede ITGAM",
+      "categoria": "Facebook Oficial ITGAM",
+      "origen": "Facebook Oficial ITGAM",
+      "sede": "Canchas y Explanada ITGAM",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "FB-02",
+      "num": "FB",
+      "mes": "Septiembre",
+      "fecha": "29 de septiembre 2026",
+      "titulo": "Etapa Regional de HackaTecNM 2026 en el ITGAM y Danza de las Esporas (Región 5)",
+      "categoria": "Facebook Oficial ITGAM",
+      "origen": "Facebook Oficial ITGAM",
+      "sede": "Centro de Cómputo (Edificio 1) y Explanada",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-119",
+      "num": 119,
+      "mes": "Septiembre",
+      "fecha": "28 al 30 de septiembre 2026",
+      "titulo": "InnovaTecNM 2026 en su Etapa Regional (Región 5 — Sede Oficial ITGAM)",
+      "categoria": "Académico y Tecnológico",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 2) y Facebook",
+      "sede": "Lienzo Charro Carlos Rincón Gallardo y Campus ITGAM",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "FB-01",
+      "num": "FB",
+      "mes": "Septiembre",
+      "fecha": "27 de septiembre 2026",
+      "titulo": "Recepción y Registro de Delegaciones en el ITGAM como Sede Regional de InnovaTecNM 2026",
+      "categoria": "Facebook Oficial ITGAM",
+      "origen": "Facebook Oficial ITGAM",
+      "sede": "Explanada y Edificio 1 ITGAM",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-118",
+      "num": 118,
+      "mes": "Septiembre",
+      "fecha": "25 de septiembre 2026",
+      "titulo": "Primer Seguimiento de la Gestión del Curso",
+      "categoria": "Académico-Administrativo",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
+      "sede": "Departamentos Académicos",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-117",
+      "num": 117,
+      "mes": "Septiembre",
+      "fecha": "23 al 25 de septiembre 2026",
+      "titulo": "1er. Seguimiento de Residencias Profesionales",
+      "categoria": "Residencias y Titulación",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
+      "sede": "División de Estudios Profesionales",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-116",
+      "num": 116,
+      "mes": "Septiembre",
+      "fecha": "18 de septiembre 2026",
+      "titulo": "Fecha límite para baja temporal de acuerdo con el lineamiento",
+      "categoria": "Académico-Administrativo",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
+      "sede": "División de Estudios Profesionales",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-115",
+      "num": 115,
+      "mes": "Septiembre",
+      "fecha": "15 de septiembre 2026",
+      "titulo": "Ceremonia cívica en conmemoración del Día de la Independencia de México",
+      "categoria": "Cívico e Institucional",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 2) y Facebook",
+      "sede": "Explanada Principal",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-114",
+      "num": 114,
+      "mes": "Septiembre",
+      "fecha": "07 de septiembre 2026",
+      "titulo": "Inicio de Actividades Complementarias agosto–diciembre 2026",
+      "categoria": "Cultural, Deportivo y Extraescolar",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
+      "sede": "Canchas, Explanada y Edificio 2",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-113",
+      "num": 113,
+      "mes": "Septiembre",
+      "fecha": "04 de septiembre 2026",
+      "titulo": "Fecha límite para baja de asignaturas de acuerdo al lineamiento",
+      "categoria": "Académico-Administrativo",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
+      "sede": "División de Estudios Profesionales",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-112",
+      "num": 112,
+      "mes": "Septiembre",
+      "fecha": "02 de septiembre 2026",
+      "titulo": "Ceremonia del 17vo. Aniversario del ITGAM",
+      "categoria": "Cívico e Institucional",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 2) y Facebook",
+      "sede": "Explanada y Auditorio Principal",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-111",
+      "num": 111,
+      "mes": "Agosto",
+      "fecha": "29 de agosto 2026",
+      "titulo": "Inicio de 1er. Módulo de la modalidad mixta de Contador Público",
+      "categoria": "Académico y Tecnológico",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
+      "sede": "Edificio 1",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-110",
+      "num": 110,
+      "mes": "Agosto",
+      "fecha": "25 de agosto 2026",
+      "titulo": "Ceremonia de inauguración del ciclo escolar agosto–diciembre 2026",
+      "categoria": "Cívico e Institucional",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
+      "sede": "Explanada / Auditorio Principal",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-109",
+      "num": 109,
+      "mes": "Agosto",
+      "fecha": "24 al 28 de agosto 2026",
+      "titulo": "Resello de credenciales estudiantiles",
+      "categoria": "Académico-Administrativo",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
+      "sede": "Servicios Escolares",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-108",
+      "num": 108,
+      "mes": "Agosto",
+      "fecha": "24 de agosto 2026",
+      "titulo": "Entrega de Asignación de Asesores para Residencias Profesionales a la DEP",
+      "categoria": "Residencias y Titulación",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
+      "sede": "División de Estudios Profesionales",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-107",
+      "num": 107,
+      "mes": "Agosto",
+      "fecha": "24 de agosto 2026",
+      "titulo": "Inicio de cursos del ciclo escolar agosto–diciembre 2026",
+      "categoria": "Académico y Tecnológico",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
+      "sede": "Edificio 1 y Edificio 2",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-106",
+      "num": 106,
+      "mes": "Agosto",
+      "fecha": "21 de agosto 2026",
+      "titulo": "Entrega de oficio de aprobación de anteproyectos y asignación de asesores de Residencias",
+      "categoria": "Residencias y Titulación",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
+      "sede": "Jefaturas Académicas",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-105",
+      "num": 105,
+      "mes": "Agosto",
+      "fecha": "21 de agosto 2026",
+      "titulo": "Curso de inducción de estudiantes de Nuevo Ingreso",
+      "categoria": "Cívico e Institucional",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 2)",
+      "sede": "Auditorio Principal (Edificio 2)",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-104",
+      "num": 104,
+      "mes": "Agosto",
+      "fecha": "21 de agosto 2026",
+      "titulo": "Entrega de credenciales para estudiantes de Nuevo Ingreso",
+      "categoria": "Académico-Administrativo",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
+      "sede": "Explanada / Servicios Escolares",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-103",
+      "num": 103,
+      "mes": "Agosto",
+      "fecha": "21 de agosto 2026",
+      "titulo": "Consulta de cargas académicas y Kardex en SIE",
+      "categoria": "Académico-Administrativo",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
+      "sede": "Sistema SIE ITGAM",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-102",
+      "num": 102,
+      "mes": "Agosto",
+      "fecha": "20 de agosto 2026",
+      "titulo": "Cursos de inducción de Servicio Social",
+      "categoria": "Cívico e Institucional",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
+      "sede": "Auditorio Principal (Edificio 2)",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-101",
+      "num": 101,
+      "mes": "Agosto",
+      "fecha": "18 al 20 de agosto 2026",
+      "titulo": "Reinscripciones al periodo agosto–diciembre 2026",
+      "categoria": "Académico-Administrativo",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
+      "sede": "Sistema SIE ITGAM",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-100",
+      "num": 100,
+      "mes": "Agosto",
+      "fecha": "17 y 18 de agosto 2026",
+      "titulo": "Inscripción, recepción de documentos y toma de fotografía de alumno de Nuevo Ingreso",
+      "categoria": "Académico-Administrativo",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
+      "sede": "Explanada y Servicios Escolares",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-99",
+      "num": 99,
+      "mes": "Agosto",
+      "fecha": "14 de agosto 2026",
+      "titulo": "Entrega de Gestión del Curso e Instrumentación Didáctica",
+      "categoria": "Académico-Administrativo",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
+      "sede": "Departamentos Académicos",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-98",
+      "num": 98,
+      "mes": "Agosto",
+      "fecha": "13 de agosto 2026",
+      "titulo": "Ceremonia de toma de protesta (Titulación)",
+      "categoria": "Cívico e Institucional",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
+      "sede": "Auditorio Principal (Edificio 2)",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-97",
+      "num": 97,
+      "mes": "Agosto",
+      "fecha": "11 al 13 de agosto 2026",
+      "titulo": "Pago de inscripción de estudiantes de nuevo ingreso",
+      "categoria": "Académico-Administrativo",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
+      "sede": "Portal en línea ITGAM",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-96",
+      "num": 96,
+      "mes": "Agosto",
+      "fecha": "11 de agosto 2026",
+      "titulo": "Última fecha para la gestión de traslados estudiantiles de acuerdo al lineamiento",
+      "categoria": "Académico-Administrativo",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
+      "sede": "Servicios Escolares",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-95",
+      "num": 95,
+      "mes": "Agosto",
+      "fecha": "10 al 21 de agosto 2026",
+      "titulo": "Curso Propedéutico para Nuevo Ingreso",
+      "categoria": "Académico y Tecnológico",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
+      "sede": "Edificio 1 y Edificio 2",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-94",
+      "num": 94,
+      "mes": "Agosto",
+      "fecha": "10 de agosto 2026",
+      "titulo": "Carta de No Inconveniencia a DEP (para el proceso de toma de protesta)",
+      "categoria": "Residencias y Titulación",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
+      "sede": "División de Estudios Profesionales",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-93",
+      "num": 93,
+      "mes": "Agosto",
+      "fecha": "07 de agosto 2026",
+      "titulo": "Examen de Admisión Convocatoria agosto–diciembre 2026",
+      "categoria": "Académico-Administrativo",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
+      "sede": "Centro de Cómputo / Campus ITGAM",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-92",
+      "num": 92,
+      "mes": "Agosto",
+      "fecha": "03 al 21 de agosto 2026",
+      "titulo": "Cursos intersemestrales para el personal docente",
+      "categoria": "Académico y Tecnológico",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
+      "sede": "Aulas y Laboratorios (Edificio 1 y 2)",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-91",
+      "num": 91,
+      "mes": "Agosto",
+      "fecha": "03 al 14 de agosto 2026",
+      "titulo": "Pago de reinscripción con cuenta referenciada y en línea",
+      "categoria": "Académico-Administrativo",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
+      "sede": "Portal en línea ITGAM / Banco",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-90",
+      "num": 90,
+      "mes": "Agosto",
+      "fecha": "03 al 10 de agosto 2026",
+      "titulo": "Recepción de documentos para titulación",
+      "categoria": "Residencias y Titulación",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
+      "sede": "División de Estudios Profesionales",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-89",
+      "num": 89,
+      "mes": "Agosto",
+      "fecha": "03 al 07 de agosto 2026",
+      "titulo": "Recepción de anteproyectos de Residencias Profesionales (semestre ago–dic 2026)",
+      "categoria": "Residencias y Titulación",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
+      "sede": "División de Estudios Profesionales (Edificio 1)",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-88",
+      "num": 88,
+      "mes": "Agosto",
+      "fecha": "03 de agosto 2026",
+      "titulo": "Reanudación de actividades académico - administrativas",
+      "categoria": "Académico-Administrativo",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
+      "sede": "Campus ITGAM",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
+    },
+    {
+      "id": "PDF-87",
+      "num": 87,
+      "mes": "Julio",
+      "fecha": "06 al 31 de julio 2026",
+      "titulo": "Periodo de receso de actividades académico administrativas",
+      "categoria": "Académico-Administrativo",
+      "origen": "CAL_AGO-DIC26.pdf (Pág. 1)",
+      "sede": "Campus ITGAM",
+      "estado": "YA_SUCEDIO",
+      "etiquetaEstado": "✅ Ya sucedió"
     }
   ]
 }
