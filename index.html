@@ -135,7 +135,33 @@
         <!-- Área de Mensajes -->
         <div id="chatMessages" class="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4 custom-scroll bg-slate-50"></div>
 
-        <!-- Barra inferior para escribir -->
+        <!-- BARRA EXCLUSIVA DE FUNCIÓN DE VOZ (SEPARADA DEL CHAT DE TEXTO) -->
+        <div class="px-4 py-2.5 bg-gradient-to-r from-[#0f2347] via-[#1B396A] to-[#0d6e52] border-t-2 border-amber-400/70 flex flex-wrap items-center justify-between gap-2.5">
+          <div class="flex items-center gap-2.5">
+            <div id="onda-voz-indicador" class="voice-wave-container" aria-hidden="true">
+              <span class="voice-wave-bar"></span>
+              <span class="voice-wave-bar"></span>
+              <span class="voice-wave-bar"></span>
+              <span class="voice-wave-bar"></span>
+            </div>
+            <div>
+              <div class="text-xs font-extrabold text-white flex items-center gap-1.5">
+                <span>🎙️ Llamada de Voz con el Halcón Peregrino (Deepgram AI)</span>
+              </div>
+              <p id="estado-llamada-halcon" class="text-[11px] text-emerald-200 font-medium">
+                Haz clic en el botón para conversar por micrófono en tiempo real
+              </p>
+            </div>
+          </div>
+
+          <!-- Botón específico para la función de voz solicitado en el Paso 1 -->
+          <button id="btn-hablar" type="button">
+            <img id="icono-halcon-btn" src="./halcon_itgam.png" alt="Halcón ITGAM" class="halcon-btn-icon" />
+            <span id="texto-btn-hablar">Hablar con el Halcón</span>
+          </button>
+        </div>
+
+        <!-- Barra inferior para escribir (Chat de Texto separado de la función de voz) -->
         <form id="chatForm" class="p-3 bg-white border-t border-slate-200 flex items-center gap-2">
           <input
             id="chatInput"

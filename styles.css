@@ -86,3 +86,112 @@ body {
   animation: avatarSpeak 0.6s infinite ease-in-out;
   box-shadow: 0 0 16px rgba(16, 185, 129, 0.7);
 }
+
+/* ==========================================================================
+   DISEÑO DEL BOTÓN DE VOZ: #btn-hablar ("Hablar con el Halcón" - ITGAM)
+   Colores representativos del ITGAM (#1B396A Azul Marino, #0d6e52 Esmeralda,
+   #f59e0b Dorado) + Ícono del Halcón sin fondo
+   ========================================================================== */
+#btn-hablar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 9px 18px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #1B396A 0%, #0d6e52 55%, #d97706 100%);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.82rem;
+  letter-spacing: 0.01em;
+  border: 2px solid #fbbf24;
+  box-shadow: 0 4px 14px rgba(13, 110, 82, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  text-shadow: 0 1px 2px rgba(15, 23, 42, 0.6);
+  white-space: nowrap;
+}
+
+#btn-hablar:hover {
+  transform: translateY(-2px) scale(1.03);
+  background: linear-gradient(135deg, #0d6e52 0%, #1B396A 60%, #f59e0b 100%);
+  border-color: #fde68a;
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.55);
+}
+
+#btn-hablar:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* Estado activo durante la llamada WebSocket con Deepgram */
+#btn-hablar.llamada-activa {
+  background: linear-gradient(135deg, #e11d48 0%, #9f1239 100%);
+  border-color: #fecdd3;
+  animation: pulsoLlamadaHalcon 1.4s infinite ease-in-out;
+}
+
+.halcon-btn-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 9999px;
+  object-fit: contain;
+  background-color: #ffffff;
+  border: 1.5px solid #fbbf24;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+
+#btn-hablar:hover .halcon-btn-icon {
+  transform: rotate(-8deg) scale(1.1);
+}
+
+@keyframes pulsoLlamadaHalcon {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.7), 0 4px 14px rgba(225, 29, 72, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 9px rgba(225, 29, 72, 0), 0 4px 20px rgba(225, 29, 72, 0.85);
+  }
+}
+
+/* Indicador de ondas de audio para la llamada con el Halcón */
+.voice-wave-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  height: 22px;
+  padding: 0 6px;
+}
+
+.voice-wave-bar {
+  width: 3.5px;
+  height: 6px;
+  border-radius: 9999px;
+  background-color: #34d399;
+  transition: height 0.15s ease;
+}
+
+.voice-wave-container.wave-active .voice-wave-bar:nth-child(1) {
+  animation: ondaVozBar 0.65s infinite ease-in-out 0.0s;
+}
+.voice-wave-container.wave-active .voice-wave-bar:nth-child(2) {
+  animation: ondaVozBar 0.65s infinite ease-in-out 0.15s;
+}
+.voice-wave-container.wave-active .voice-wave-bar:nth-child(3) {
+  animation: ondaVozBar 0.65s infinite ease-in-out 0.3s;
+}
+.voice-wave-container.wave-active .voice-wave-bar:nth-child(4) {
+  animation: ondaVozBar 0.65s infinite ease-in-out 0.45s;
+}
+
+@keyframes ondaVozBar {
+  0%, 100% {
+    height: 5px;
+    background-color: #34d399;
+  }
+  50% {
+    height: 20px;
+    background-color: #fbbf24;
+  }
+}
