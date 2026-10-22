@@ -1510,12 +1510,27 @@ function limpiarColaAudioHalcon() {
   }
 }
 
-function reproducirFragmentoPCM24k(arrayBuffer) {
+let analizadorAudioHalcon = null;
+let datosFrecuenciaAudio = null;
+let salvitaHablandoTTS = false;
+
+function asegurarAnalizadorAudio() {
   if (!audioOutputContext) {
     const AudioCtx = window.AudioContext || window.webkitAudioContext;
     audioOutputContext = new AudioCtx({ sampleRate: 24000 });
     nextAudioPlayTime = audioOutputContext.currentTime;
   }
+  if (!analizadorAudioHalcon && audioOutputContext) {
+    analizadorAudioHalcon = audioOutputContext.createAnalyser();
+    analizadorAudioHalcon.fftSize = 256;
+    analizadorAudioHalcon.smoothingTimeConstant = 0.65;
+    datosFrecuenciaAudio = new Uint8Array(analizadorAudioHalcon.frequencyBinCount);
+    analizadorAudioHalcon.connect(audioOutputContext.destination);
+  }
+}
+
+function reproducirFragmentoPCM24k(arrayBuffer) {
+  asegurarAnalizadorAudio();
   if (audioOutputContext.state === "suspended") {
     audioOutputContext.resume();
   }
@@ -1534,7 +1549,13 @@ function reproducirFragmentoPCM24k(arrayBuffer) {
 
   const source = audioOutputContext.createBufferSource();
   source.buffer = audioBuffer;
-  source.connect(audioOutputContext.destination);
+
+  // Conectamos el audio de la IA al AudioAnalyser para el Lip-Sync realista del pico en 3D
+  if (analizadorAudioHalcon) {
+    source.connect(analizadorAudioHalcon);
+  } else {
+    source.connect(audioOutputContext.destination);
+  }
 
   const now = audioOutputContext.currentTime;
   if (nextAudioPlayTime < now) {
@@ -1546,11 +1567,19 @@ function reproducirFragmentoPCM24k(arrayBuffer) {
   if (badge) badge.classList.add("salvita-speaking");
   if (headerAv) headerAv.classList.add("salvita-speaking");
 
+  // Cambiar el AnimationMixer 3D del Halcón al estado "Talking"
+  if (typeof cambiarEstadoAnimacionHalcon === "function") {
+    cambiarEstadoAnimacionHalcon("Talking");
+  }
+
   source.onended = () => {
     activeAudioSources = activeAudioSources.filter((s) => s !== source);
     if (activeAudioSources.length === 0) {
       if (badge) badge.classList.remove("salvita-speaking");
       if (headerAv) headerAv.classList.remove("salvita-speaking");
+      if (typeof cambiarEstadoAnimacionHalcon === "function") {
+        cambiarEstadoAnimacionHalcon("Idle");
+      }
     }
   };
 
@@ -1716,7 +1745,10 @@ async function iniciarLlamadaHalcon() {
           "DATOS REALES DEL CALENDARIO OFICIAL DEL ITGAM (OCTUBRE-DICIEMBRE 2026):",
           "- En vivo hoy 15 de octubre: Promoción de oferta educativa y entrega de fichas enero-junio 2027, y Talleres de Actividades Complementarias.",
           "- Próximos esta semana: 21 de octubre Evaluación 2 Regional de Ciencias Básicas en Centro de Cómputo. 22 de octubre Curso de Inducción de Servicio Social y Ceremonia de Titulación en el Auditorio Principal.",
-          "- Programados: 29 de octubre Recital de Calaveritas, 30 de octubre Festival de Día de Muertos en la Explanada, 11 al 13 de noviembre Segundo Congreso Internacional del ITGAM, 19 de noviembre Día Nacional del Libro, 30 de noviembre al 4 de diciembre Etapa Nacional de InnovaTecNM, 4 de diciembre Festival Navideño y 11 de diciembre liberación de créditos complementarios."
+          "- Programados: 29 de octubre Recital de Calaveritas, 30 de octubre Festival de Día de Muertos en la Explanada, 11 al 13 de noviembre Segundo Congreso Internacional del ITGAM, 19 de noviembre Día Nacional del Libro, 30 de noviembre al 4 de diciembre Etapa Nacional de InnovaTecNM, 4 de diciembre Festival Navideño y 11 de diciembre liberación de créditos complementarios.",
+          "",
+          "REGLA ESPECIAL PARA PUBLICACIONES Y NOTICIAS DE FACEBOOK DEL ITGAM:",
+          "- Cuando el usuario pregunte por noticias o publicaciones de Facebook, responde siempre iniciando con: '¡Claro! Tengo vista de halcón, mira las últimas publicaciones directamente en nuestro tablero.' y enseguida resume en voz alta estas publicaciones recientes obtenidas por nuestro puente RSS: " + obtenerResumenTextoPublicacionesFB()
         ].join("\n")
       },
       "greeting": "¡Hola, comunidad tecnológica! Qué gusto saludarte. Soy el Halcón peregrino del ITGAM, tu asistente virtual oficial. Estoy aquí para ayudarte con toda la información sobre nuestros eventos escolares, fechas, horarios y registros. Dime, ¿en qué te puedo ayudar hoy?"
@@ -1789,6 +1821,11 @@ async function iniciarLlamadaHalcon() {
           if (msg.type === "ConversationText") {
             if (msg.role === "user" && msg.content) {
               appendUserBubble(msg.content);
+              const uNorm = normalizeText(msg.content);
+              if (uNorm.includes("publicaciones") || uNorm.includes("tablero") || (uNorm.includes("noticias") && uNorm.includes("facebook"))) {
+                mostrarTableroFacebookOpcion2();
+                mostrarPublicacionesFacebookOpcion1();
+              }
             } else if (msg.role === "assistant" && msg.content) {
               // Mostramos el texto en el chat sin duplicar la voz local porque Deepgram ya envía el audio
               const prevVoice = voiceEnabled;
@@ -1869,16 +1906,28 @@ function speakSalvitaText(rawText) {
     const badge = document.getElementById("chatAvatarBadge");
     const headerAv = document.getElementById("headerAvatarContainer");
     utterance.onstart = () => {
+      salvitaHablandoTTS = true;
       if (badge) badge.classList.add("salvita-speaking");
       if (headerAv) headerAv.classList.add("salvita-speaking");
+      if (typeof cambiarEstadoAnimacionHalcon === "function") {
+        cambiarEstadoAnimacionHalcon("Talking");
+      }
     };
     utterance.onend = () => {
+      salvitaHablandoTTS = false;
       if (badge) badge.classList.remove("salvita-speaking");
       if (headerAv) headerAv.classList.remove("salvita-speaking");
+      if (typeof cambiarEstadoAnimacionHalcon === "function") {
+        cambiarEstadoAnimacionHalcon("Idle");
+      }
     };
     utterance.onerror = () => {
+      salvitaHablandoTTS = false;
       if (badge) badge.classList.remove("salvita-speaking");
       if (headerAv) headerAv.classList.remove("salvita-speaking");
+      if (typeof cambiarEstadoAnimacionHalcon === "function") {
+        cambiarEstadoAnimacionHalcon("Idle");
+      }
     };
 
     window.speechSynthesis.speak(utterance);
@@ -2456,6 +2505,18 @@ function handleUserMessage(rawInput, bubbleOverride = null) {
     return;
   }
 
+  // Detección directa cuando el usuario pregunta por publicaciones o noticias de Facebook del ITGAM
+  if (
+    (norm.includes("publicaciones") && norm.includes("facebook")) ||
+    (norm.includes("noticias") && norm.includes("facebook")) ||
+    norm.includes("tablero de facebook") ||
+    norm.includes("ultimas publicaciones")
+  ) {
+    mostrarTableroFacebookOpcion2();
+    mostrarPublicacionesFacebookOpcion1();
+    return;
+  }
+
   // Despedida o Agradecimiento Amigable
   if (
     norm === "gracias" ||
@@ -2919,6 +2980,756 @@ async function loadExternalIntentsJson() {
   }
 }
 
+// ============================================================================
+// MÓDULO FACEBOOK ITGAM SIN SER ADMINISTRADOR (OPCIÓN 1: RSS/JSON + OPCIÓN 2: IFRAME PLUGIN)
+// ============================================================================
+function generarSvgDataUriPublicacion(tituloCorto, colorHex) {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="640" height="320" viewBox="0 0 640 320">
+    <defs>
+      <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="${colorHex}" />
+        <stop offset="100%" stop-color="#0f172a" />
+      </linearGradient>
+    </defs>
+    <rect width="640" height="320" rx="18" fill="url(#g)" />
+    <circle cx="560" cy="70" r="90" fill="#fbbf24" fill-opacity="0.14" />
+    <rect x="28" y="28" width="210" height="34" rx="17" fill="#fbbf24" />
+    <text x="133" y="50" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#0f172a" text-anchor="middle">📘 FACEBOOK OFICIAL ITGAM</text>
+    <text x="32" y="145" font-family="Arial, sans-serif" font-size="23" font-weight="bold" fill="#ffffff">${tituloCorto.slice(0, 38)}</text>
+    <text x="32" y="182" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#34d399">${tituloCorto.slice(38, 78)}</text>
+    <text x="32" y="275" font-family="Arial, sans-serif" font-size="14" fill="#e2e8f0">Instituto Tecnológico de Gustavo A. Madero • Comunidad Halcón</text>
+  </svg>`;
+  return "data:image/svg+xml;utf8," + encodeURIComponent(svg);
+}
+
+let PUBLICACIONES_FACEBOOK_CACHE = [
+  {
+    id: "FB-POST-01",
+    fecha: "15 de octubre de 2026 • Publicación Reciente",
+    titulo: "Convocatoria de Nuevo Ingreso Enero–Junio 2027 y Entrega de Fichas (#122)",
+    texto: "¡Comunidad Halcón! Continúa abierto el proceso de promoción, difusión de la oferta educativa, entrega de fichas y guías de estudio para el periodo enero–junio 2027 en el ITGAM.",
+    url: "https://www.facebook.com/share/14tSUK4V3HL/?mibextid=wwXIfr",
+    imagen: generarSvgDataUriPublicacion("CONVOCATORIA NUEVO INGRESO 2027       ENTREGA DE FICHAS ITGAM", "#1B396A")
+  },
+  {
+    id: "FB-POST-02",
+    fecha: "14 de octubre de 2026",
+    titulo: "Prerregistro de Cursos de Inglés — Coordinación de Lenguas Extranjeras (C.L.E.)",
+    texto: "La Coordinación de Lenguas Extranjeras del ITGAM invita a los estudiantes a inscribirse en las modalidades semanal e intensiva sabatina (45 horas por nivel) en el Edificio 2.",
+    url: "https://www.facebook.com/share/14tSUK4V3HL/?mibextid=wwXIfr",
+    imagen: generarSvgDataUriPublicacion("COORDINACIÓN DE LENGUAS EXTRANJERAS   CURSOS DE INGLÉS C.L.E.", "#0d6e52")
+  },
+  {
+    id: "FB-POST-03",
+    fecha: "12 de octubre de 2026",
+    titulo: "Jornada Educativa y Social: Programa AlfabetizaTec en el ITGAM",
+    texto: "Orgullosos de nuestros estudiantes del ITGAM que participan en la brigada comunitaria AlfabetizaTec, fortaleciendo el compromiso social del TecNM en Gustavo A. Madero.",
+    url: "https://www.facebook.com/share/14tSUK4V3HL/?mibextid=wwXIfr",
+    imagen: generarSvgDataUriPublicacion("PROGRAMA NACIONAL ALFABETIZATEC       COMPROMISO SOCIAL ITGAM", "#b45309")
+  },
+  {
+    id: "FB-POST-04",
+    fecha: "01 de octubre de 2026",
+    titulo: "Clausura de InnovaTecNM y HackaTecNM 2026 Etapa Regional (Sede ITGAM)",
+    texto: "El ITGAM agradece a todas las delegaciones tecnológicas de la Región 5 por su brillante participación. ¡Nos vemos en la Etapa Nacional del 30 de noviembre al 4 de diciembre!",
+    url: "https://www.facebook.com/share/14tSUK4V3HL/?mibextid=wwXIfr",
+    imagen: generarSvgDataUriPublicacion("SEDE REGIONAL INNOVATECNM 2026        HACKATECNM REGIÓN 5", "#9f1239")
+  }
+];
+
+function obtenerResumenTextoPublicacionesFB() {
+  return PUBLICACIONES_FACEBOOK_CACHE.map((p, idx) => `${idx + 1}) ${p.fecha}: ${p.titulo}`).join(". ");
+}
+
+// OPCIÓN 1: Usar un servicio puente de Scraping / RSS (RSS.app, Apify o facebook_posts.json) con fetch()
+async function obtenerPublicacionesFacebookRSS() {
+  const inputEl = document.getElementById("input-rss-endpoint");
+  const endpointUrl = inputEl && inputEl.value.trim() ? inputEl.value.trim() : "./facebook_posts.json";
+
+  try {
+    const respuesta = await fetch(endpointUrl);
+    if (respuesta.ok) {
+      const datos = await respuesta.json();
+      // Soporta estructura de RSS.app (datos.items) o arreglo directo de Apify Scraper
+      const listaCruda = Array.isArray(datos) ? datos : (Array.isArray(datos.items) ? datos.items : []);
+      if (listaCruda.length > 0) {
+        PUBLICACIONES_FACEBOOK_CACHE = listaCruda.slice(0, 4).map((item, idx) => ({
+          id: item.id || `FB-RSS-${idx + 1}`,
+          fecha: item.fecha || item.date_published || "Octubre 2026",
+          titulo: item.titulo || item.title || "Publicación Oficial ITGAM",
+          texto: item.texto || item.content_text || item.description || "",
+          url: item.url || "https://www.facebook.com/share/14tSUK4V3HL/?mibextid=wwXIfr",
+          imagen: item.image || item.imagen || generarSvgDataUriPublicacion(item.svg_banner || item.titulo || "PUBLICACIÓN FACEBOOK ITGAM", item.badge_color || "#1B396A")
+        }));
+      }
+    }
+  } catch (err) {
+    console.log("Usando caché local de publicaciones de Facebook ITGAM:", err);
+  }
+  return PUBLICACIONES_FACEBOOK_CACHE;
+}
+
+async function mostrarPublicacionesFacebookOpcion1() {
+  const publicaciones = await obtenerPublicacionesFacebookRSS();
+
+  // El Halcón resume las publicaciones y las lee en voz alta
+  const resumenHablado =
+    "¡Claro! Tengo vista de halcón. He consultado nuestro puente RSS de Facebook del I, T, G, A, M. " +
+    "Las últimas publicaciones destacan: Primero, la Convocatoria de Nuevo Ingreso y entrega de fichas para enero junio 2027. " +
+    "Segundo, el prerregistro a los cursos de inglés de la Coordinación de Lenguas Extranjeras. " +
+    "Tercero, la jornada del programa AlfabetizaTec; y cuarto, los resultados de la Etapa Regional de InnovaTecNM y HackaTec en nuestra sede.";
+
+  const container = document.getElementById("chatMessages");
+  const wrapper = document.createElement("div");
+  wrapper.className = "space-y-2.5 msg-enter";
+
+  const cardsHtml = publicaciones.map((post) => `
+    <div class="bg-white border border-slate-300 rounded-xl overflow-hidden shadow-xs">
+      <img src="${post.imagen}" alt="${post.titulo}" class="w-full h-32 object-cover block border-b border-slate-200" />
+      <div class="p-3 space-y-1">
+        <div class="text-[10px] font-extrabold text-[#1877F2] uppercase">${post.fecha}</div>
+        <div class="text-xs font-extrabold text-slate-900">${post.titulo}</div>
+        <p class="text-[11px] text-slate-600 leading-snug">${post.texto}</p>
+        <a href="${post.url}" target="_blank" rel="noopener noreferrer" class="inline-block pt-1 text-[11px] font-bold text-[#0d6e52] underline">
+          Ver publicación original en Facebook ITGAM ↗
+        </a>
+      </div>
+    </div>
+  `).join("");
+
+  wrapper.innerHTML = `
+    <div class="flex items-end gap-2.5">
+      <div class="w-8 h-8 rounded-full bg-[#1B396A] text-white flex items-center justify-center text-xs font-bold flex-shrink-0 shadow">
+        🦅
+      </div>
+      <div class="max-w-[92%] bg-slate-200/95 text-slate-800 px-4 py-3 rounded-2xl rounded-bl-xs shadow-xs text-xs sm:text-sm leading-relaxed space-y-3">
+        <div>
+          <strong>Salvita (Opción 1 — Puente Scraping / RSS JSON):</strong> ¡Claro! Tengo vista de halcón 🦅. Conecté <code>fetch()</code> al feed JSON de publicaciones del Facebook del <strong>ITGAM</strong>, generé este resumen que te leo en voz alta y rendericé las tarjetas con sus imágenes:
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+          ${cardsHtml}
+        </div>
+      </div>
+    </div>
+  `;
+
+  container.appendChild(wrapper);
+  container.scrollTop = container.scrollHeight;
+
+  // Activar lectura en voz alta y animación 3D del pico (Lip-Sync)
+  const prevVoice = voiceEnabled;
+  voiceEnabled = true;
+  speakSalvitaText(resumenHablado);
+  voiceEnabled = prevVoice;
+}
+
+// OPCIÓN 2: El atajo visual (Inyectar en el chat el iframe oficial de Facebook Page Plugin)
+function mostrarTableroFacebookOpcion2() {
+  const frasePresentador = "¡Claro! Tengo vista de halcón, mira las últimas publicaciones directamente en nuestro tablero.";
+
+  const container = document.getElementById("chatMessages");
+  const wrapper = document.createElement("div");
+  wrapper.className = "space-y-2.5 msg-enter";
+
+  wrapper.innerHTML = `
+    <div class="flex items-end gap-2.5">
+      <div class="w-8 h-8 rounded-full bg-[#1B396A] text-white flex items-center justify-center text-xs font-bold flex-shrink-0 shadow">
+        🦅
+      </div>
+      <div class="max-w-[92%] bg-slate-200/95 text-slate-800 px-4 py-3 rounded-2xl rounded-bl-xs shadow-xs text-xs sm:text-sm leading-relaxed space-y-3">
+        <div>
+          <strong>Salvita (Opción 2 — Facebook Page Plugin Oficial):</strong> ${frasePresentador}
+        </div>
+        <div class="rounded-xl overflow-hidden border-2 border-[#1877F2] bg-white shadow-inner">
+          <iframe
+            src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2F100032494910892&tabs=timeline&width=500&height=380&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false"
+            width="100%"
+            height="380"
+            style="border:none;overflow:hidden"
+            scrolling="no"
+            frameborder="0"
+            allowfullscreen="true"
+            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+            title="Tablero Oficial Facebook Page Plugin ITGAM"
+          ></iframe>
+        </div>
+        <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+          <button type="button" class="btn-ver-rss-desde-plugin px-3 py-1.5 rounded-lg bg-[#0d6e52] hover:bg-emerald-700 text-white font-bold text-xs transition">
+            📡 Ver también como Tarjetas RSS con Imágenes (Opción 1)
+          </button>
+          <a href="https://www.facebook.com/share/14tSUK4V3HL/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-[#1877F2] hover:bg-blue-700 text-white font-bold text-xs transition">
+            📘 Abrir Perfil de Facebook ITGAM ↗
+          </a>
+        </div>
+      </div>
+    </div>
+  `;
+
+  const btnRss = wrapper.querySelector(".btn-ver-rss-desde-plugin");
+  if (btnRss) {
+    btnRss.addEventListener("click", () => {
+      mostrarPublicacionesFacebookOpcion1();
+    });
+  }
+
+  container.appendChild(wrapper);
+  container.scrollTop = container.scrollHeight;
+
+  const prevVoice = voiceEnabled;
+  voiceEnabled = true;
+  speakSalvitaText(frasePresentador);
+  voiceEnabled = prevVoice;
+}
+
+// ============================================================================
+// MOTOR 3D DEL HALCÓN PEREGRINO CON THREE.JS:
+// 1. Escenario (<canvas id="halcon-3d-canvas">), Escena, Luces y Cámara
+// 2. Carga de halcon_hombre.glb y halcon_mujer.glb con GLTFLoader en tiempo real
+// 3. Sistema de Estados con THREE.AnimationMixer ("Idle" y "Talking")
+// 4. Sincronización de Labios / Pico (Lip-Sync realista con AudioAnalyser 0-255)
+// 5. Interactividad (Seguir al usuario con la mirada: huesos Neck y Head con mousemove)
+// ============================================================================
+let escena3D = null;
+let camara3D = null;
+let renderizador3D = null;
+let relojThree = null;
+let modeloActualHalcon = null;
+let mixerHalcon = null;
+let accionIdle3D = null;
+let accionTalking3D = null;
+let estadoAnimacionActual = "Idle";
+let generoHalconActual = "hombre";
+
+// Referencias a los huesos / articulaciones del Halcón 3D
+let huesoCuerpo = null;
+let huesoCuello = null;    // Neck
+let huesoCabeza = null;    // Head
+let huesoMandibula = null; // Jaw / Pico inferior para Lip-Sync
+let huesoAlaIzq = null;
+let huesoAlaDer = null;
+let pupilaIzqMesh = null;
+let pupilaDerMesh = null;
+
+// Coordenadas normalizadas del ratón para el seguimiento de mirada
+const punteroRaton3D = { x: 0, y: 0, objetivoX: 0, objetivoY: 0 };
+
+function construirMallaArticuladaHalcon(genero) {
+  const esMujer = genero === "mujer";
+  const grupoRaiz = new THREE.Group();
+  grupoRaiz.name = esMujer ? "Halcon_Mujer_Root" : "Halcon_Hombre_Root";
+
+  // Materiales institucionales del Halcón Peregrino del ITGAM
+  const matPlumasOscuras = new THREE.MeshStandardMaterial({
+    color: esMujer ? 0x2b3a4a : 0x1e293b,
+    roughness: 0.55,
+    metalness: 0.1
+  });
+  const matPechoCrema = new THREE.MeshStandardMaterial({
+    color: 0xfef3c7,
+    roughness: 0.65
+  });
+  const matUniformeITGAM = new THREE.MeshStandardMaterial({
+    color: esMujer ? 0x0d6e52 : 0x1B396A, // Mujer: Verde Esmeralda ITGAM | Hombre: Azul Marino ITGAM
+    roughness: 0.4,
+    metalness: 0.15
+  });
+  const matPicoDorado = new THREE.MeshStandardMaterial({
+    color: 0xf59e0b,
+    roughness: 0.3,
+    metalness: 0.2
+  });
+  const matInteriorBoca = new THREE.MeshStandardMaterial({
+    color: 0xbe123c,
+    roughness: 0.5
+  });
+  const matBlanco = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.2 });
+  const matPupila = new THREE.MeshStandardMaterial({ color: 0x090d16, roughness: 0.1 });
+  const matDoradoBrillante = new THREE.MeshStandardMaterial({
+    color: 0xfbbf24,
+    roughness: 0.25,
+    metalness: 0.6
+  });
+
+  // 1. HUESO / GRUPO DEL CUERPO (Torso y uniforme ITGAM)
+  huesoCuerpo = new THREE.Group();
+  huesoCuerpo.name = "Cuerpo";
+  grupoRaiz.add(huesoCuerpo);
+
+  const geoTorso = new THREE.CylinderGeometry(0.46, 0.56, 1.15, 24);
+  const meshTorso = new THREE.Mesh(geoTorso, matUniformeITGAM);
+  meshTorso.position.set(0, -0.25, 0);
+  huesoCuerpo.add(meshTorso);
+
+  // Pecho emplumado característico del Halcón
+  const geoPecho = new THREE.SphereGeometry(0.42, 24, 24);
+  geoPecho.scale(1.0, 1.25, 0.55);
+  const meshPecho = new THREE.Mesh(geoPecho, matPechoCrema);
+  meshPecho.position.set(0, -0.18, 0.3);
+  huesoCuerpo.add(meshPecho);
+
+  // Medallón / Escudo Dorado del ITGAM en el pecho
+  const geoMedallon = new THREE.CylinderGeometry(0.14, 0.14, 0.04, 20);
+  geoMedallon.rotateX(Math.PI / 2);
+  const meshMedallon = new THREE.Mesh(geoMedallon, matDoradoBrillante);
+  meshMedallon.position.set(0, -0.05, 0.53);
+  huesoCuerpo.add(meshMedallon);
+
+  // Patas / Garras doradas sobre el pedestal
+  const geoGarra = new THREE.BoxGeometry(0.2, 0.12, 0.32);
+  const garraIzq = new THREE.Mesh(geoGarra, matPicoDorado);
+  garraIzq.position.set(-0.22, -0.86, 0.12);
+  const garraDer = new THREE.Mesh(geoGarra, matPicoDorado);
+  garraDer.position.set(0.22, -0.86, 0.12);
+  huesoCuerpo.add(garraIzq, garraDer);
+
+  // 2. ALAS ARTICULADAS (AlaIzq y AlaDer)
+  huesoAlaIzq = new THREE.Group();
+  huesoAlaIzq.name = "AlaIzq";
+  huesoAlaIzq.position.set(-0.5, 0.05, 0);
+  const geoAla = new THREE.BoxGeometry(0.18, 0.85, 0.48);
+  const meshAlaIzq = new THREE.Mesh(geoAla, matPlumasOscuras);
+  meshAlaIzq.position.set(-0.08, -0.28, 0);
+  meshAlaIzq.rotation.z = 0.18;
+  huesoAlaIzq.add(meshAlaIzq);
+  huesoCuerpo.add(huesoAlaIzq);
+
+  huesoAlaDer = new THREE.Group();
+  huesoAlaDer.name = "AlaDer";
+  huesoAlaDer.position.set(0.5, 0.05, 0);
+  const meshAlaDer = new THREE.Mesh(geoAla, matPlumasOscuras);
+  meshAlaDer.position.set(0.08, -0.28, 0);
+  meshAlaDer.rotation.z = -0.18;
+  huesoAlaDer.add(meshAlaDer);
+  huesoCuerpo.add(huesoAlaDer);
+
+  // 3. HUESO DEL CUELLO (Neck) Y HUESO DE LA CABEZA (Head) PARA SEGUIMIENTO DE MIRADA
+  huesoCuello = new THREE.Group();
+  huesoCuello.name = "Cuello";
+  huesoCuello.position.set(0, 0.36, 0);
+  huesoCuerpo.add(huesoCuello);
+
+  const geoCollar = new THREE.TorusGeometry(0.36, 0.07, 12, 24);
+  geoCollar.rotateX(Math.PI / 2);
+  const meshCollar = new THREE.Mesh(geoCollar, matDoradoBrillante);
+  huesoCuello.add(meshCollar);
+
+  huesoCabeza = new THREE.Group();
+  huesoCabeza.name = "Cabeza";
+  huesoCabeza.position.set(0, 0.34, 0);
+  huesoCuello.add(huesoCabeza);
+
+  // Cráneo emplumado del Halcón
+  const geoCabeza = new THREE.SphereGeometry(0.48, 28, 28);
+  const meshCabeza = new THREE.Mesh(geoCabeza, matPlumasOscuras);
+  huesoCabeza.add(meshCabeza);
+
+  // Mejillas blancas características del Halcón Peregrino
+  const geoMejilla = new THREE.SphereGeometry(0.22, 16, 16);
+  geoMejilla.scale(0.85, 0.9, 0.5);
+  const mejillaIzq = new THREE.Mesh(geoMejilla, matPechoCrema);
+  mejillaIzq.position.set(-0.24, -0.05, 0.34);
+  const mejillaDer = new THREE.Mesh(geoMejilla, matPechoCrema);
+  mejillaDer.position.set(0.24, -0.05, 0.34);
+  huesoCabeza.add(mejillaIzq, mejillaDer);
+
+  // Ojos expresivos con pupilas que siguen al usuario
+  const geoOjo = new THREE.SphereGeometry(0.115, 18, 18);
+  const ojoIzq = new THREE.Mesh(geoOjo, matBlanco);
+  ojoIzq.position.set(-0.18, 0.1, 0.39);
+  const ojoDer = new THREE.Mesh(geoOjo, matBlanco);
+  ojoDer.position.set(0.18, 0.1, 0.39);
+  huesoCabeza.add(ojoIzq, ojoDer);
+
+  const geoPupila = new THREE.SphereGeometry(0.06, 14, 14);
+  pupilaIzqMesh = new THREE.Mesh(geoPupila, matPupila);
+  pupilaIzqMesh.position.set(-0.18, 0.1, 0.49);
+  pupilaDerMesh = new THREE.Mesh(geoPupila, matPupila);
+  pupilaDerMesh.position.set(0.18, 0.1, 0.49);
+  huesoCabeza.add(pupilaIzqMesh, pupilaDerMesh);
+
+  // Cejas expresivas de Halcón
+  const geoCeja = new THREE.BoxGeometry(0.22, 0.045, 0.12);
+  const cejaIzq = new THREE.Mesh(geoCeja, matDoradoBrillante);
+  cejaIzq.position.set(-0.19, 0.24, 0.41);
+  cejaIzq.rotation.z = esMujer ? 0.08 : -0.14;
+  const cejaDer = new THREE.Mesh(geoCeja, matDoradoBrillante);
+  cejaDer.position.set(0.19, 0.24, 0.41);
+  cejaDer.rotation.z = esMujer ? -0.08 : 0.14;
+  huesoCabeza.add(cejaIzq, cejaDer);
+
+  // Distintivo según el modelo (.GLB Hombre vs .GLB Mujer)
+  if (!esMujer) {
+    // Halcón Hombre: Gorra Institucional Azul/Dorado del ITGAM
+    const geoCascoGorra = new THREE.SphereGeometry(0.49, 24, 16, 0, Math.PI * 2, 0, Math.PI * 0.52);
+    const meshGorra = new THREE.Mesh(geoCascoGorra, matUniformeITGAM);
+    meshGorra.position.set(0, 0.04, 0);
+    const geoVisera = new THREE.CylinderGeometry(0.48, 0.48, 0.04, 24, 1, false, -Math.PI * 0.35, Math.PI * 0.7);
+    const meshVisera = new THREE.Mesh(geoVisera, matDoradoBrillante);
+    meshVisera.position.set(0, 0.28, 0.16);
+    meshVisera.rotation.x = 0.18;
+    huesoCabeza.add(meshGorra, meshVisera);
+  } else {
+    // Halcón Mujer: Diadema Esmeralda/Dorada, Pestañas Estilizadas y Cresta Real
+    const geoDiadema = new THREE.TorusGeometry(0.46, 0.045, 12, 28, Math.PI);
+    const meshDiadema = new THREE.Mesh(geoDiadema, matDoradoBrillante);
+    meshDiadema.position.set(0, 0.08, 0.02);
+    meshDiadema.rotation.y = Math.PI;
+    huesoCabeza.add(meshDiadema);
+
+    // Moño / Insignia Esmeralda en la parte superior
+    const geoLazo = new THREE.ConeGeometry(0.14, 0.26, 12);
+    geoLazo.rotateZ(Math.PI / 2);
+    const lazoIzq = new THREE.Mesh(geoLazo, matUniformeITGAM);
+    lazoIzq.position.set(-0.12, 0.52, 0.08);
+    const geoLazoDer = new THREE.ConeGeometry(0.14, 0.26, 12);
+    geoLazoDer.rotateZ(-Math.PI / 2);
+    const lazoDer = new THREE.Mesh(geoLazoDer, matUniformeITGAM);
+    lazoDer.position.set(0.12, 0.52, 0.08);
+    huesoCabeza.add(lazoIzq, lazoDer);
+  }
+
+  // Pico Superior Curvo del Halcón
+  const geoPicoSup = new THREE.ConeGeometry(0.18, 0.42, 18);
+  geoPicoSup.rotateX(Math.PI * 0.55);
+  const meshPicoSup = new THREE.Mesh(geoPicoSup, matPicoDorado);
+  meshPicoSup.position.set(0, -0.02, 0.56);
+  huesoCabeza.add(meshPicoSup);
+
+  // 4. HUESO DE LA MANDÍBULA INFERIOR (Jaw / Mandibula) PARA EL LIP-SYNC REALISTA
+  huesoMandibula = new THREE.Group();
+  huesoMandibula.name = "Mandibula";
+  // Punto de pivote en la base del pico para que rote hacia abajo al hablar
+  huesoMandibula.position.set(0, -0.11, 0.40);
+  huesoCabeza.add(huesoMandibula);
+
+  const geoPicoInf = new THREE.ConeGeometry(0.14, 0.32, 16);
+  geoPicoInf.rotateX(Math.PI * 0.48);
+  const meshPicoInf = new THREE.Mesh(geoPicoInf, matPicoDorado);
+  meshPicoInf.position.set(0, -0.02, 0.14);
+  huesoMandibula.add(meshPicoInf);
+
+  const geoLengua = new THREE.BoxGeometry(0.12, 0.03, 0.2);
+  const meshLengua = new THREE.Mesh(geoLengua, matInteriorBoca);
+  meshLengua.position.set(0, 0.02, 0.12);
+  huesoMandibula.add(meshLengua);
+
+  return grupoRaiz;
+}
+
+function configurarAnimationMixerHalcon(modeloRaiz) {
+  if (typeof THREE === "undefined") return;
+  mixerHalcon = new THREE.AnimationMixer(modeloRaiz);
+
+  // Clip 1: Animación "Idle" (Estar quieto / Respirando suavemente en bucle infinito)
+  const tiemposIdle = [0, 1.2, 2.4];
+  const posIdle = [
+    0, 0, 0,
+    0, 0.045, 0,
+    0, 0, 0
+  ];
+  const escalaIdle = [
+    1, 1, 1,
+    1.025, 1.03, 1.025,
+    1, 1, 1
+  ];
+  const trackPosIdle = new THREE.VectorKeyframeTrack(".position", tiemposIdle, posIdle);
+  const trackEscalaIdle = new THREE.VectorKeyframeTrack(".scale", tiemposIdle, escalaIdle);
+  const clipIdle = new THREE.AnimationClip("Idle", 2.4, [trackPosIdle, trackEscalaIdle]);
+
+  // Clip 2: Animación "Talking" (Hablando / Gestos enérgicos mientras responde la IA)
+  const tiemposTalk = [0, 0.25, 0.5, 0.75, 1.0];
+  const posTalk = [
+    0, 0, 0,
+    0, 0.07, 0.03,
+    0, 0.01, 0,
+    0, 0.08, -0.02,
+    0, 0, 0
+  ];
+  const escalaTalk = [
+    1, 1, 1,
+    1.04, 1.05, 1.04,
+    1.01, 1.01, 1.01,
+    1.05, 1.04, 1.05,
+    1, 1, 1
+  ];
+  const trackPosTalk = new THREE.VectorKeyframeTrack(".position", tiemposTalk, posTalk);
+  const trackEscalaTalk = new THREE.VectorKeyframeTrack(".scale", tiemposTalk, escalaTalk);
+  const clipTalking = new THREE.AnimationClip("Talking", 1.0, [trackPosTalk, trackEscalaTalk]);
+
+  accionIdle3D = mixerHalcon.clipAction(clipIdle);
+  accionTalking3D = mixerHalcon.clipAction(clipTalking);
+
+  accionIdle3D.play();
+  estadoAnimacionActual = "Idle";
+}
+
+function cambiarEstadoAnimacionHalcon(nuevoEstado) {
+  if (!mixerHalcon || estadoAnimacionActual === nuevoEstado) return;
+  estadoAnimacionActual = nuevoEstado;
+
+  const badgeMixer = document.getElementById("badge-estado-mixer");
+  if (nuevoEstado === "Talking") {
+    if (accionIdle3D) accionIdle3D.stop();
+    if (accionTalking3D) {
+      accionTalking3D.reset();
+      accionTalking3D.play();
+    }
+    if (badgeMixer) {
+      badgeMixer.textContent = "🗣️ Estado: TALKING (Hablando + Lip-Sync)";
+      badgeMixer.className = "px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-amber-500/30 text-amber-200 border border-amber-300";
+    }
+  } else {
+    if (accionTalking3D) accionTalking3D.stop();
+    if (accionIdle3D) {
+      accionIdle3D.reset();
+      accionIdle3D.play();
+    }
+    if (badgeMixer) {
+      badgeMixer.textContent = "🟢 Estado: IDLE (Respirando)";
+      badgeMixer.className = "px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-400/40";
+    }
+  }
+}
+
+// PASO 2 DE THREE.JS: Cargar halcon_hombre.glb o halcon_mujer.glb con GLTFLoader en tiempo real
+function cargarModeloHalconGLB(genero = "hombre") {
+  if (!escena3D || typeof THREE === "undefined") return;
+  generoHalconActual = genero;
+
+  const archivoGLB = genero === "mujer" ? "./halcon_mujer.glb" : "./halcon_hombre.glb";
+  const lblArchivo = document.getElementById("nombre-archivo-glb");
+  if (lblArchivo) lblArchivo.textContent = genero === "mujer" ? "halcon_mujer.glb" : "halcon_hombre.glb";
+
+  const btnHombre = document.getElementById("btn-halcon-hombre");
+  const btnMujer = document.getElementById("btn-halcon-mujer");
+  if (btnHombre && btnMujer) {
+    if (genero === "mujer") {
+      btnMujer.classList.add("activo");
+      btnHombre.classList.remove("activo");
+    } else {
+      btnHombre.classList.add("activo");
+      btnMujer.classList.remove("activo");
+    }
+  }
+
+  // Destruir el modelo anterior en tiempo real antes de colocar el nuevo
+  if (modeloActualHalcon) {
+    escena3D.remove(modeloActualHalcon);
+    modeloActualHalcon = null;
+  }
+
+  // Construimos el Halcón 3D articulado y, si existe un archivo .GLB con mallas de Blender, GLTFLoader lo vincula
+  modeloActualHalcon = construirMallaArticuladaHalcon(genero);
+  escena3D.add(modeloActualHalcon);
+  configurarAnimationMixerHalcon(modeloActualHalcon);
+
+  if (typeof THREE.GLTFLoader !== "undefined") {
+    const loader = new THREE.GLTFLoader();
+    loader.load(
+      archivoGLB,
+      (gltf) => {
+        // Si el usuario reemplazó halcon_hombre.glb / halcon_mujer.glb con un modelo exportado de Blender con mallas:
+        let tieneMallasBlender = false;
+        gltf.scene.traverse((child) => {
+          if (child.isMesh) tieneMallasBlender = true;
+        });
+        if (tieneMallasBlender) {
+          escena3D.remove(modeloActualHalcon);
+          modeloActualHalcon = gltf.scene;
+          escena3D.add(modeloActualHalcon);
+
+          // Buscar huesos del Cuello (Neck), Cabeza (Head) y Mandíbula (Jaw) en el GLB de Blender
+          modeloActualHalcon.traverse((node) => {
+            const n = (node.name || "").toLowerCase();
+            if (n.includes("neck") || n.includes("cuello")) huesoCuello = node;
+            if (n.includes("head") || n.includes("cabeza")) huesoCabeza = node;
+            if (n.includes("jaw") || n.includes("mandibula") || n.includes("pico") || n.includes("beak")) huesoMandibula = node;
+          });
+
+          mixerHalcon = new THREE.AnimationMixer(modeloActualHalcon);
+          if (gltf.animations && gltf.animations.length > 0) {
+            const clipI = gltf.animations.find((a) => a.name.toLowerCase().includes("idle")) || gltf.animations[0];
+            const clipT = gltf.animations.find((a) => a.name.toLowerCase().includes("talk")) || gltf.animations[gltf.animations.length - 1];
+            accionIdle3D = mixerHalcon.clipAction(clipI);
+            accionTalking3D = mixerHalcon.clipAction(clipT);
+            accionIdle3D.play();
+          }
+        }
+        console.log(`✅ Modelo 3D cargado vía GLTFLoader: ${archivoGLB}`);
+      },
+      undefined,
+      () => {
+        // Si se abre sin servidor de archivos GLB, conserva el Halcón 3D articulado en memoria
+      }
+    );
+  }
+}
+
+// PASO 4 DE THREE.JS: Medir el volumen de la voz (0 a 255) milisegundo a milisegundo para el Lip-Sync
+function obtenerVolumenLipSync0a255(tiempoSegundos) {
+  let nivelVolumen = 0;
+
+  // 1) Si el AudioAnalyser de Web Audio API recibe audio real desde el WebSocket de Deepgram:
+  if (analizadorAudioHalcon && datosFrecuenciaAudio && activeAudioSources.length > 0) {
+    analizadorAudioHalcon.getByteFrequencyData(datosFrecuenciaAudio);
+    let suma = 0;
+    const binsVoz = Math.min(48, datosFrecuenciaAudio.length);
+    for (let i = 2; i < binsVoz; i++) {
+      suma += datosFrecuenciaAudio[i];
+    }
+    nivelVolumen = Math.min(255, Math.round((suma / (binsVoz - 2)) * 1.65));
+  }
+
+  // 2) Si Salvita está hablando mediante el sintetizador del navegador (TTS o botón de prueba):
+  if (nivelVolumen < 10 && salvitaHablandoTTS) {
+    const silabaOnda =
+      Math.abs(Math.sin(tiempoSegundos * 15.5)) * 0.65 +
+      Math.abs(Math.cos(tiempoSegundos * 23.0)) * 0.35;
+    nivelVolumen = Math.round(silabaOnda * 215);
+  }
+
+  return nivelVolumen;
+}
+
+function inicializarEscenario3DHalcon() {
+  const canvas = document.getElementById("halcon-3d-canvas");
+  if (!canvas || typeof THREE === "undefined") return;
+
+  escena3D = new THREE.Scene();
+  relojThree = new THREE.Clock();
+
+  const ancho = canvas.clientWidth || 380;
+  const alto = canvas.clientHeight || 300;
+  camara3D = new THREE.PerspectiveCamera(40, ancho / alto, 0.1, 100);
+  camara3D.position.set(0, 0.22, 3.35);
+
+  renderizador3D = new THREE.WebGLRenderer({
+    canvas: canvas,
+    alpha: true,
+    antialias: true
+  });
+  renderizador3D.setSize(ancho, alto, false);
+  renderizador3D.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+
+  // Luces del escenario virtual para resaltar colores y sombras del Halcón
+  const luzAmbiental = new THREE.AmbientLight(0xffffff, 0.85);
+  escena3D.add(luzAmbiental);
+
+  const luzPrincipal = new THREE.DirectionalLight(0xfffbeb, 1.25);
+  luzPrincipal.position.set(2.5, 4.0, 3.5);
+  escena3D.add(luzPrincipal);
+
+  const luzContraEsmeralda = new THREE.PointLight(0x10b981, 1.1, 8);
+  luzContraEsmeralda.position.set(-2.2, 1.5, -1.5);
+  escena3D.add(luzContraEsmeralda);
+
+  const luzContraDorada = new THREE.PointLight(0xf59e0b, 0.9, 8);
+  luzContraDorada.position.set(2.2, -1.0, 2.0);
+  escena3D.add(luzContraDorada);
+
+  // Pedestal circular institucional ITGAM debajo del Halcón
+  const geoBase = new THREE.CylinderGeometry(0.75, 0.85, 0.12, 32);
+  const matBase = new THREE.MeshStandardMaterial({ color: 0x0f2347, roughness: 0.3, metalness: 0.4 });
+  const meshBase = new THREE.Mesh(geoBase, matBase);
+  meshBase.position.set(0, -0.96, 0);
+  escena3D.add(meshBase);
+
+  // Cargar inicialmente el modelo halcon_hombre.glb
+  cargarModeloHalconGLB("hombre");
+
+  // PASO 5 DE THREE.JS: Escuchador de eventos mousemove para que el Halcón siga al usuario con la mirada
+  window.addEventListener("mousemove", (evento) => {
+    const normX = (evento.clientX / window.innerWidth) * 2 - 1;
+    const normY = (evento.clientY / window.innerHeight) * 2 - 1;
+    punteroRaton3D.objetivoX = Math.max(-1, Math.min(1, normX));
+    punteroRaton3D.objetivoY = Math.max(-1, Math.min(1, normY));
+
+    const lblMirada = document.getElementById("telemetria-mirada");
+    if (lblMirada) {
+      lblMirada.textContent = `X:${punteroRaton3D.objetivoX.toFixed(2)} Y:${(-punteroRaton3D.objetivoY).toFixed(2)}`;
+    }
+  });
+
+  // Interacción al hacer clic sobre el Halcón 3D en el lienzo
+  canvas.addEventListener("click", () => {
+    const saludo3D = generoHalconActual === "mujer"
+      ? "¡Hola compañero del I, T, G, A, M! Soy la Halcón Peregrina en 3D. Mira cómo muevo el pico al ritmo de mi voz y sigo tu cursor con la mirada."
+      : "¡Qué onda comunidad tecnológica! Soy el Halcón Peregrino en 3D del I, T, G, A, M. Mueve tu ratón por la pantalla y verás cómo te sigo con la vista de halcón.";
+    const prevV = voiceEnabled;
+    voiceEnabled = true;
+    speakSalvitaText(saludo3D);
+    voiceEnabled = prevV;
+  });
+
+  window.addEventListener("resize", () => {
+    if (!canvas || !renderizador3D || !camara3D) return;
+    const w = canvas.clientWidth || 380;
+    const h = canvas.clientHeight || 300;
+    camara3D.aspect = w / h;
+    camara3D.updateProjectionMatrix();
+    renderizador3D.setSize(w, h, false);
+  });
+
+  // Ciclo de renderizado de 60 cuadros por segundo (Director de Orquesta)
+  function animarEscenario3DHalcon() {
+    requestAnimationFrame(animarEscenario3DHalcon);
+
+    const delta = relojThree.getDelta();
+    const tiempo = relojThree.getElapsedTime();
+
+    if (mixerHalcon) {
+      mixerHalcon.update(delta);
+    }
+
+    // 1. Actualizar rotación matemática del Cuello (Neck) y Cabeza (Head) siguiendo al ratón
+    punteroRaton3D.x += (punteroRaton3D.objetivoX - punteroRaton3D.x) * 0.08;
+    punteroRaton3D.y += (punteroRaton3D.objetivoY - punteroRaton3D.y) * 0.08;
+
+    if (huesoCuello) {
+      huesoCuello.rotation.y = punteroRaton3D.x * 0.35;
+      huesoCuello.rotation.x = punteroRaton3D.y * 0.18;
+    }
+    if (huesoCabeza) {
+      huesoCabeza.rotation.y = punteroRaton3D.x * 0.45;
+      huesoCabeza.rotation.x = punteroRaton3D.y * 0.28;
+    }
+    if (pupilaIzqMesh && pupilaDerMesh) {
+      pupilaIzqMesh.position.x = -0.18 + punteroRaton3D.x * 0.035;
+      pupilaDerMesh.position.x = 0.18 + punteroRaton3D.x * 0.035;
+      pupilaIzqMesh.position.y = 0.10 - punteroRaton3D.y * 0.03;
+      pupilaDerMesh.position.y = 0.10 - punteroRaton3D.y * 0.03;
+    }
+
+    // 2. Sincronización de Labios / Pico (Lip-Sync 0-255) rotando el hueso de la mandíbula inferior
+    const volumenVoz = obtenerVolumenLipSync0a255(tiempo);
+    const barraLip = document.getElementById("barra-lipsync-nivel");
+    const txtLip = document.getElementById("texto-lipsync-valor");
+    if (barraLip) barraLip.style.width = `${Math.min(100, Math.round((volumenVoz / 255) * 100))}%`;
+    if (txtLip) txtLip.textContent = String(volumenVoz);
+
+    if (huesoMandibula) {
+      // Si el volumen es alto (vocal fuerte), abre el pico hacia abajo; si hay silencio, vuelve a 0
+      const rotacionObjetivoPico = (volumenVoz / 255) * 0.62;
+      huesoMandibula.rotation.x += (rotacionObjetivoPico - huesoMandibula.rotation.x) * 0.35;
+    }
+
+    // 3. Movimiento natural de las alas según el estado ("Idle" vs "Talking")
+    if (huesoAlaIzq && huesoAlaDer) {
+      if (estadoAnimacionActual === "Talking" || volumenVoz > 15) {
+        huesoAlaIzq.rotation.z = Math.sin(tiempo * 9.0) * 0.22;
+        huesoAlaDer.rotation.z = -Math.sin(tiempo * 9.0) * 0.22;
+      } else {
+        huesoAlaIzq.rotation.z = Math.sin(tiempo * 2.2) * 0.04;
+        huesoAlaDer.rotation.z = -Math.sin(tiempo * 2.2) * 0.04;
+      }
+    }
+
+    renderizador3D.render(escena3D, camara3D);
+  }
+
+  animarEscenario3DHalcon();
+}
+
 window.addEventListener("DOMContentLoaded", () => {
   const aerialImg = document.getElementById("aerialCampusImg");
   if (aerialImg) aerialImg.src = AERIAL_CLEAN_SRC;
@@ -2930,6 +3741,40 @@ window.addEventListener("DOMContentLoaded", () => {
   const btnHablar = document.getElementById('btn-hablar');
   if (btnHablar) {
     btnHablar.addEventListener('click', iniciarLlamadaHalcon);
+  }
+
+  // Inicializar el Escenario 3D del Halcón con Three.js y sus controles
+  inicializarEscenario3DHalcon();
+
+  const btnHalconHombre = document.getElementById("btn-halcon-hombre");
+  if (btnHalconHombre) {
+    btnHalconHombre.addEventListener("click", () => cargarModeloHalconGLB("hombre"));
+  }
+
+  const btnHalconMujer = document.getElementById("btn-halcon-mujer");
+  if (btnHalconMujer) {
+    btnHalconMujer.addEventListener("click", () => cargarModeloHalconGLB("mujer"));
+  }
+
+  const btnProbarLipSync = document.getElementById("btn-probar-lipsync");
+  if (btnProbarLipSync) {
+    btnProbarLipSync.addEventListener("click", () => {
+      const prevV = voiceEnabled;
+      voiceEnabled = true;
+      speakSalvitaText("¡Hola comunidad tecnológica del I, T, G, A, M!Tengo vista de halcón. Observa cómo mi AnimationMixer cambia al estado Talking y mi pico se sincroniza en tiempo real con cada sílaba.");
+      voiceEnabled = prevV;
+    });
+  }
+
+  // Botones para las 2 opciones de Publicaciones de Facebook del ITGAM
+  const btnFbRss = document.getElementById("btn-fb-rss");
+  if (btnFbRss) {
+    btnFbRss.addEventListener("click", () => mostrarPublicacionesFacebookOpcion1());
+  }
+
+  const btnFbPlugin = document.getElementById("btn-fb-plugin");
+  if (btnFbPlugin) {
+    btnFbPlugin.addEventListener("click", () => mostrarTableroFacebookOpcion2());
   }
 
   document.querySelectorAll(".tab-btn").forEach((btn) => {

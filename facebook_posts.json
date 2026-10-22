@@ -1,0 +1,47 @@
+{
+  "status": "ok",
+  "fuente": "Servicio Puente Scraping / RSS JSON - Página Oficial de Facebook ITGAM",
+  "perfil_url": "https://www.facebook.com/share/14tSUK4V3HL/?mibextid=wwXIfr",
+  "items": [
+    {
+      "id": "FB-POST-01",
+      "fecha": "15 de octubre de 2026 • Publicación Destacada",
+      "titulo": "📢 Convocatoria de Nuevo Ingreso Enero–Junio 2027 y Entrega de Fichas (#122)",
+      "texto": "¡Comunidad Halcón! Continúa abierto el proceso de promoción, difusión de la oferta educativa, entrega de fichas y guías de estudio para el semestre enero–junio 2027 en el ITGAM. Consulta requisitos en nuestro portal oficial.",
+      "categoria": "Admisión y Oferta Educativa",
+      "url": "https://www.facebook.com/share/14tSUK4V3HL/?mibextid=wwXIfr",
+      "badge_color": "#1B396A",
+      "svg_banner": "CONVOCATORIA NUEVO INGRESO 2027 • ENTREGA DE FICHAS ITGAM"
+    },
+    {
+      "id": "FB-POST-02",
+      "fecha": "14 de octubre de 2026",
+      "titulo": "🌎 Prerregistro de Cursos de Inglés — Coordinación de Lenguas Extranjeras (C.L.E.)",
+      "texto": "La Coordinación de Lenguas Extranjeras del ITGAM invita a los estudiantes y público en general a inscribirse en las modalidades semanal e intensiva sabatina (45 horas por nivel) en el Edificio 2.",
+      "categoria": "Idiomas C.L.E.",
+      "url": "https://www.facebook.com/share/14tSUK4V3HL/?mibextid=wwXIfr",
+      "badge_color": "#0d6e52",
+      "svg_banner": "COORDINACIÓN DE LENGUAS EXTRANJERAS (CLE) • INGLÉS ITGAM"
+    },
+    {
+      "id": "FB-POST-03",
+      "fecha": "12 de octubre de 2026",
+      "titulo": "📚 Jornada Educativa y Social: Programa AlfabetizaTec en el ITGAM",
+      "texto": "Orgullosos de nuestros estudiantes del ITGAM que participan activamente en la brigada comunitaria AlfabetizaTec, fortaleciendo el compromiso social del Tecnológico Nacional de México en Gustavo A. Madero.",
+      "categoria": "Servicio Social y Comunidad",
+      "url": "https://www.facebook.com/share/14tSUK4V3HL/?mibextid=wwXIfr",
+      "badge_color": "#d97706",
+      "svg_banner": "PROGRAMA NACIONAL ALFABETIZATEC • ORGULLO HALCÓN ITGAM"
+    },
+    {
+      "id": "FB-POST-04",
+      "fecha": "01 de octubre de 2026",
+      "titulo": "🏆 Clausura Exitosa de InnovaTecNM y HackaTecNM 2026 Etapa Regional (Sede ITGAM)",
+      "texto": "El ITGAM agradece a todas las delegaciones tecnológicas de la Región 5 por su brillante participación en el HackaTecNM e InnovaTecNM 2026. ¡Nos vemos en la Etapa Nacional del 30 de noviembre al 4 de diciembre!",
+      "categoria": "InnovaTecNM / HackaTec",
+      "url": "https://www.facebook.com/share/14tSUK4V3HL/?mibextid=wwXIfr",
+      "badge_color": "#be123c",
+      "svg_banner": "SEDE REGIONAL INNOVATECNM Y HACKATECNM 2026 • REGIÓN 5"
+    }
+  ]
+}

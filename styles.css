@@ -195,3 +195,34 @@ body {
     background-color: #fbbf24;
   }
 }
+
+/* ==========================================================================
+   ESTILOS DEL ESCENARIO 3D (THREE.JS) Y SELECTOR DE HALCÓN HOMBRE / MUJER
+   ========================================================================== */
+.canvas-3d-wrapper {
+  background: radial-gradient(circle at 50% 38%, rgba(16, 185, 129, 0.22) 0%, rgba(27, 57, 106, 0.35) 55%, rgba(2, 6, 23, 0.85) 100%);
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.55);
+}
+
+#halcon-3d-canvas {
+  outline: none;
+}
+
+.modelo-3d-btn {
+  background-color: rgba(15, 23, 42, 0.75);
+  color: #cbd5e1;
+  border: 1.5px solid rgba(148, 163, 184, 0.3);
+}
+
+.modelo-3d-btn:hover {
+  background-color: rgba(27, 57, 106, 0.85);
+  color: #ffffff;
+  border-color: #38bdf8;
+}
+
+.modelo-3d-btn.activo {
+  background: linear-gradient(135deg, #0d6e52 0%, #1B396A 100%);
+  color: #ffffff;
+  border-color: #fbbf24;
+  box-shadow: 0 3px 12px rgba(16, 185, 129, 0.4);
+}
